@@ -1,26 +1,30 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ButtonAppBar from "./Components/AppBar";
+import ReportView from "./ReportView";
+import ReactDOM from "react-dom/client";
+import {Route, Routes} from "react-router-dom";
+import {Box} from '@mui/material';
+import SupervisorView from "./SupervisorView";
+import LandingPage from "./LandingPage";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+
+        <Box>
+            <ButtonAppBar/>
+            <Routes>
+                <Route path={"/report"} element={<ReportView/>}/>
+                <Route path={"/view"} element={<SupervisorView/>}/>
+                <Route path={'/'} element={<LandingPage/>}/>
+            </Routes>
+
+        </Box>
+
+
+    );
 }
 
 export default App;
