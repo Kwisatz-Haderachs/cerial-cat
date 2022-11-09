@@ -1,3 +1,14 @@
+MUI Install:
+npm install @mui/material @emotion/react @emotion/styled
+
+TypeScript Install:
+npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+
+// Mantine Install
+npm install @mantine/core @mantine/hooks @mantine/dates dayjs @mantine/form @emotion/react
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
