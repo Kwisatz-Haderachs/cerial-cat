@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ButtonAppBar from "./Components/AppBar";
+import ButtonAppBar from "../Components/AppBar";
 import Box from "@mui/material/Box";
 import {List, Stack} from "@mui/material";
 
