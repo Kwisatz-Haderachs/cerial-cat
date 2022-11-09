@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
+import {TextInput} from '@mantine/core'
+import { DatePicker, TimeInput } from '@mantine/dates';
 import Box from "@mui/material/Box";
 import {Grid, Stack, TextField} from "@mui/material";
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import InputLabel from '@mui/material/InputLabel';
@@ -36,7 +36,7 @@ export default function ReportView {
         patientAddress: "",
     }
 
-    const { onChange, onSubmit, values } = useReportForm(
+    const { onDateChange, onSelectChange, onTextChange, onSubmit, values } = useReportForm(
         submitReportCallback,
         blankReport,
     );
@@ -45,7 +45,6 @@ export default function ReportView {
         // post values to database
     }
 
-    const[dateEvent, setDateEvent] = useState("")
 
     return (
         <Box className="App">
@@ -54,29 +53,33 @@ export default function ReportView {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <DesktopDatePicker
-                                label="Date desktop"
-                                inputFormat="MM/DD/YYYY"
-                                value={Date.now()}
-                                name = {blankReport.dateOfEvent}
-                                //(e: React.ChangeEvent<HTMLInputElement>): void
-                                onChange={onChange}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
+                            <DatePicker
+                                label={blankReport.dateOfEvent} withAsterisk
+                                defaultValue={new Date()}
+
+                            //     value={Date.now()}
+                            //     //(e: React.ChangeEvent<HTMLInputElement>): void
+                               onChange={onDateChange}
+                            //     renderInput={(params) => <TextField {...params} />}
+                             />
                         </Grid>
                         <Grid item xs={6}>
-                        <TimePicker
-                            label="Time"
+                        <TimeInput
+                            label={blankReport.timeOfEvent}
+                            inputFormat="HH:MM:SS"
                             value={Date.now()}
-                            name = "timeOfEvent"
-                            onChange={() => handleInputChange}
+                            onChange={onDateChange}
                             renderInput={(params) => <TextField {...params} />}
                         />
                         </Grid>
                     </Grid>
                 </LocalizationProvider>
             <Box>
-                <TextField variant='filled' label='Location of event' onChange={onChange}></TextField>
+                <TextField
+                    variant='filled'
+                    label='Location of event'
+                    name={blankReport.locationOfEvent}
+                    onChange={onTextChange}></TextField>
             </Box>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -85,31 +88,34 @@ export default function ReportView {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={'false'}
+                                value={blankReport.eventType}
                                 label="Incident Type"
-                                onChange={onChange}
+                                onChange={onSelectChange}
                             >
-                                <MenuItem value={"true"}>Actual Event/Incident</MenuItem>
+                                <MenuItem value={true}>Actual Event/Incident</MenuItem>
                                 <MenuItem value={"false"}>Near Miss/CloseCall</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
                     <Grid item xs={6}>
                         <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                            <InputLabel id="demo-simple-select-label">Harm</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={"false"}
                                 label="harm"
-                                onChange={onChange}
+                                name = {blankReport.harm}
+                                onChange={onSelectChange}
                             >
-                                <MenuItem value={"true"}>Actual Event/Incident</MenuItem>
-                                <MenuItem value={"false"}>Near Miss/CloseCall</MenuItem>
+                                <MenuItem value={"true"}>Harm</MenuItem>
+                                <MenuItem value={"false"}>Potential Harm</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
                 </Grid>
+
+
                 <h2> Individuals involved </h2>
                 <h2>Type of Event </h2>
                 <h2> Effect of this incident on the individuals involved</h2>

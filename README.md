@@ -8,7 +8,8 @@ npm install --save typescript @types/node @types/react @types/react-dom @types/j
 npm install @mui/x-date-pickers
 // Install date library (if not already installed)
 npm install moment
-
+// Mantine Install
+npm install @mantine/core @mantine/hooks
 
 
 # Getting Started with Create React App

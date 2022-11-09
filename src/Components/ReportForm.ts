@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import {SelectChangeEvent} from "@mui/material/Select";
+import { useForm } from '@mantine/form';
 
 export interface ReportForm{
     dateOfEvent: string,
@@ -24,10 +26,16 @@ export interface ReportForm{
 export const useReportForm = (initialState : ReportForm) => {
     const [values, setValues] = useState(initialState)
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement> | null) => {
-        if(event !== null) {
-            setValues({...values, [event.target.name]: event.target.value})
-        }
+    const onDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValues({...values, [event.target.name]: event.target.value as string})
+    }
+
+    const onSelectChange = (event: SelectChangeEvent<HTMLInputElement>) => {
+        setValues({...values, [event.target.name]: event.target.value})
+    }
+
+    const onTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValues({...values, [event.target.name]: event.target.value as string})
     }
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -36,7 +44,9 @@ export const useReportForm = (initialState : ReportForm) => {
     };
 
     return{
-        onChange,
+        onDateChange,
+        onSelectChange,
+        onTextChange,
         onSubmit,
         values,
     }
