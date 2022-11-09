@@ -93,7 +93,7 @@ export default function ReportView() {
                     </Grid>
                     <Grid item xs={6}>
                         <Select
-                            id="demo-simple-select"
+                            withAsterisk
                             label="Harm"
                             data={[
                                 {value: 'Harm', label: "Harm"},
@@ -103,16 +103,81 @@ export default function ReportView() {
                         />
                     </Grid>
                 </Grid>
-
                 <Box>
-
+                    <Select
+                        withAsterisk
+                        label="Effect of Incident"
+                        data={[
+                            // Input values
+                            {value: 'Harm sustained', label: "Harm"},
+                            {value: 'Potential Harm', label: "Potential Harm"}
+                        ]}
+                        onChange={(event: string ) => report.setFieldValue('effectOfIncident', (event === 'Harm'))}
+                    />
                 </Box>
+                <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                        <TextInput
+                            withAsterisk
+                            label='Witness'
+                            onChange={(event ) => report.insertListItem('witness', event.target.value)}
+                        >
+                        </TextInput>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextInput
+                            withAsterisk
+                            label='Witness Number'
+                            onChange={(event ) => report.insertListItem('witnessNumbers', event.target.value)}
+                        >
+                        </TextInput>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextInput
+                            label='Witness'
+                            onChange={(event ) => report.insertListItem('witness', event.target.value)}
+                        >
+                        </TextInput>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextInput
+                            label='Witness Number'
+                            onChange={(event ) => report.insertListItem('witnessNumbers', event.target.value)}
+                        >
+                        </TextInput>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextInput
 
-                <h2>Type of Event </h2>
-                <h2> Effect of this incident on the individuals involved</h2>
-                <h2>Witness Name</h2>
-                <h2>Departments involved in this incident</h2>
-                <h2>What afctions if any...</h2>
+                            label='Witness'
+                            onChange={(event ) => report.insertListItem('witness', event.target.value)}
+                        >
+                        </TextInput>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextInput
+                            label='Witness Number'
+                            onChange={(event ) => report.insertListItem('witnessNumbers', event.target.value)}
+                        >
+                        </TextInput>
+                    </Grid>
+                </Grid>
+                <Box>
+                    <TextInput
+                        withAsterisk
+                        label='Departments Involved'
+                        onChange={(event ) => report.insertListItem('departmentsInvolved', event.target.value)}
+                    >
+                    </TextInput>
+                </Box>
+                <Box>
+                    <TextInput
+                        withAsterisk
+                        label='Description'
+                        onChange={(event ) => report.setFieldValue('description', event.target.value)}
+                    >
+                    </TextInput>
+                </Box>
                 <Box>
                     <TextInput
                         withAsterisk
