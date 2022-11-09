@@ -4,6 +4,10 @@ npm install @mui/material @emotion/react @emotion/styled
 TypeScript Install:
 npm install --save typescript @types/node @types/react @types/react-dom @types/jest
 
+// Install component (community version)
+npm install @mui/x-date-pickers
+// Install date library (if not already installed)
+npm install moment
 
 
 

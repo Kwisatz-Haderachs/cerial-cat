@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import ButtonAppBar from "../Components/AppBar";
 import Box from "@mui/material/Box";
+// @ts-ignore
+import dayjs from 'dayjs';
 import {Grid, Stack, TextField} from "@mui/material";
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -9,26 +11,31 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export default function ReportView() {
-const[report,setReport]=useState({
-    "dateOfEvent":"",
-    "timeOfEvent":"",
-    "locationOfEvent":"",
-    "eventType":false,
-    "harm":false,
-    "individuals":[],
-    "typeOfEvent":[],
-    "effectOfIncident":false,
-    "witness":[],
-    "witnessNumbers":[],
-    "departmentsInvolved":[],
-    "description":"",
-    "actions":"",
-    "patientName":"",
-    "patientPhone":"",
-    "patientSSN":"",
-    "patientAdress":""
-})
-    
+    const[report,setReport]=useState({
+        "dateOfEvent":"",
+        "timeOfEvent":"",
+        "locationOfEvent":"",
+        "eventType":false,
+        "harm":false,
+        "individuals":[],
+        "typeOfEvent":[],
+        "effectOfIncident":false,
+        "witness":[],
+        "witnessNumbers":[],
+        "departmentsInvolved":[],
+        "description":"",
+        "actions":"",
+        "patientName":"",
+        "patientPhone":"",
+        "patientSSN":"",
+        "patientAdress":""
+    })
+     const [value, setValue] = React.useState(dayjs('2020-11-08T21:11:54'));
+
+    const handleChange = (newValue: any) => {
+        setValue(newValue);
+    };
+
     return (
         <Box className="App">
                 <h2>Incident Report Form</h2>
@@ -39,7 +46,7 @@ const[report,setReport]=useState({
                             <DesktopDatePicker
                                 label="Date desktop"
                                 inputFormat="MM/DD/YYYY"
-                                value={}
+                                value={value}
                                 onChange={(e)=>{setReport(({...report,["dateOfEvent"]:e.target.value}))}}
                                 renderInput={(params) => <TextField {...params} />}
                             />
@@ -47,7 +54,7 @@ const[report,setReport]=useState({
                         <Grid item xs={6}>
                         <TimePicker
                             label="Time"
-                            value={}
+                            value={value}
                             onChange={(e)=>{setReport(({...report,["timeOfEvent"]:e.target.value}))}}
                             renderInput={(params) => <TextField {...params} />}
                         />
