@@ -4,12 +4,9 @@ npm install @mui/material @emotion/react @emotion/styled
 TypeScript Install:
 npm install --save typescript @types/node @types/react @types/react-dom @types/jest
 
-// Install component (community version)
-npm install @mui/x-date-pickers
-// Install date library (if not already installed)
-npm install moment
 // Mantine Install
-npm install @mantine/core @mantine/hooks
+npm install @mantine/core @mantine/hooks @mantine/dates dayjs @mantine/form @emotion/react
+
 
 
 # Getting Started with Create React App

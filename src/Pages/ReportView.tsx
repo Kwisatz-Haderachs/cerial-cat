@@ -1,127 +1,126 @@
-import React, { useState } from 'react';
-import './App.css';
-import {TextInput} from '@mantine/core'
+import React from 'react';
+import {TextInput, Select} from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
-import Box from "@mui/material/Box";
-import {Grid, Stack, TextField} from "@mui/material";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import {ChangeEvent} from "react";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {ReportForm, useReportForm} from "../Components/ReportForm";
+import { useForm } from '@mantine/form';
+import {Grid, Stack, Box} from "@mui/material";
 
 
-export default function ReportView {
+export default function ReportView() {
 
-    const blankReport: ReportForm = {
-        dateOfEvent: "",
-        timeOfEvent: "",
-        locationOfEvent: "",
-        eventType: false,
-        harm: false,
-        individuals: [],
-        typeOfEvent: [],
-        effectOfIncident: false,
-        witness: [],
-        witnessNumbers: [],
-        departmentsInvolved: [],
-        description: "",
-        actions: "",
-        patientName: "",
-        patientPhone: "",
-        patientSSN: "",
-        patientAddress: "",
-    }
+    // export interface ReportForm{
+    //     dateOfEvent: string,
+    //     timeOfEvent: string,
+    //     locationOfEvent: string,
+    //     eventType: boolean,
+    //     harm: boolean,
+    //     individuals:[],
+    //     typeOfEvent:[],
+    //     effectOfIncident:boolean,
+    //     witness:[],
+    //     witnessNumbers:[],
+    //     departmentsInvolved:[],
+    //     description:string,
+    //     actions:string,
+    //     patientName:string,
+    //     patientPhone:string,
+    //     patientSSN:string,
+    //     patientAddress:string
+    // }
 
-    const { onDateChange, onSelectChange, onTextChange, onSubmit, values } = useReportForm(
-        submitReportCallback,
-        blankReport,
-    );
-
-    async function submitReportCallback(){
-        // post values to database
-    }
-
+    const report = useForm({
+        initialValues: {
+            dateOfEvent: "",
+            timeOfEvent: "",
+            locationOfEvent: "",
+            eventType: false,
+            harm: false,
+            individuals: [],
+            typeOfEvent: [],
+            effectOfIncident: false,
+            witness: [],
+            witnessNumbers: [],
+            departmentsInvolved: [],
+            description: "",
+            actions: "",
+            patientName: "",
+            patientPhone: "",
+            patientSSN: "",
+            patientAddress: "",
+        },
+    });
 
     return (
         <Box className="App">
                 <h2>Incident Report Form</h2>
             <Stack>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <DatePicker
-                                label={blankReport.dateOfEvent} withAsterisk
+                                label={"Date of Event"}
+                                withAsterisk
                                 defaultValue={new Date()}
-
-                            //     value={Date.now()}
-                            //     //(e: React.ChangeEvent<HTMLInputElement>): void
-                               onChange={onDateChange}
-                            //     renderInput={(params) => <TextField {...params} />}
+                                onChange={(event :Date) => report.setFieldValue('dateOfEvent', event.toDateString())}
                              />
                         </Grid>
                         <Grid item xs={6}>
                         <TimeInput
-                            label={blankReport.timeOfEvent}
-                            inputFormat="HH:MM:SS"
-                            value={Date.now()}
-                            onChange={onDateChange}
-                            renderInput={(params) => <TextField {...params} />}
+                            withAsterisk
+                            label={"Time of Event"}
+                            defaultValue={new Date()}
+                            onChange={(event :Date) => report.setFieldValue('timeOfEvent', event.toDateString())}
                         />
                         </Grid>
                     </Grid>
-                </LocalizationProvider>
             <Box>
-                <TextField
-                    variant='filled'
+                <TextInput
+                    withAsterisk
                     label='Location of event'
-                    name={blankReport.locationOfEvent}
-                    onChange={onTextChange}></TextField>
+                    onChange={(event ) => report.setFieldValue('locationOfEvent', event.target.value)}
+                >
+                </TextInput>
             </Box>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Actual/Near</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={blankReport.eventType}
-                                label="Incident Type"
-                                onChange={onSelectChange}
-                            >
-                                <MenuItem value={true}>Actual Event/Incident</MenuItem>
-                                <MenuItem value={"false"}>Near Miss/CloseCall</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <Select
+                            withAsterisk
+                            label="Incident Type"
+                            data={[
+                                {value: 'Actual Event/Incident', label: "Actual Event/Incident"},
+                                {value: 'Near Miss/CloseCall', label: "Near Miss/CloseCall"}
+                            ]}
+                            onChange={(event: string ) => report.setFieldValue('eventType', (event === 'Actual Event/Incident'))}
+                        />
                     </Grid>
                     <Grid item xs={6}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Harm</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={"false"}
-                                label="harm"
-                                name = {blankReport.harm}
-                                onChange={onSelectChange}
-                            >
-                                <MenuItem value={"true"}>Harm</MenuItem>
-                                <MenuItem value={"false"}>Potential Harm</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <Select
+                            id="demo-simple-select"
+                            label="Harm"
+                            data={[
+                                {value: 'Harm', label: "Harm"},
+                                {value: 'Potential Harm', label: "Potential Harm"}
+                            ]}
+                            onChange={(event: string ) => report.setFieldValue('harm', (event === 'Harm'))}
+                        />
                     </Grid>
                 </Grid>
 
+                <Box>
 
-                <h2> Individuals involved </h2>
+                </Box>
+
                 <h2>Type of Event </h2>
                 <h2> Effect of this incident on the individuals involved</h2>
                 <h2>Witness Name</h2>
                 <h2>Departments involved in this incident</h2>
                 <h2>What afctions if any...</h2>
+                <Box>
+                    <TextInput
+                        withAsterisk
+                        label='Actions'
+                        onChange={(event ) => report.setFieldValue('actions', event.target.value)}
+                    >
+                    </TextInput>
+                </Box>
                 <h2>Patient Name</h2>
                 <h2> Patient SSN</h2>
                 <h2>Patient Phone</h2>
