@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 export interface ReportForm{
     dateOfEvent: string,
@@ -20,28 +20,24 @@ export interface ReportForm{
     patientAddress:string
 }
 
-function reportForm(reportForm: ReportForm){
-    const inputReport: ReportForm = {
-            dateOfEvent: "",
-            timeOfEvent: "",
-            locationOfEvent: "",
-            eventType: false,
-            harm: false,
-            individuals: [],
-            typeOfEvent: [],
-            effectOfIncident: false,
-            witness: [],
-            witnessNumbers: [],
-            departmentsInvolved: [],
-            description: "",
-            actions: "",
-            patientName: "",
-            patientPhone: "",
-            patientSSN: "",
-            patientAddress: "",
-    }:
-        React.InputHTMLAttributes<HTMLInputElement>) => {
-        const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            onChange(e.currentTarget.value, e.currentTarget.name)
-        };
+// <T,>(callback: () => Promise<any>,
+export const useReportForm = (initialState : ReportForm) => {
+    const [values, setValues] = useState(initialState)
+
+    const onChange = (event: React.ChangeEvent<HTMLInputElement> | null) => {
+        if(event !== null) {
+            setValues({...values, [event.target.name]: event.target.value})
+        }
+    }
+
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log("Meow!")
+    };
+
+    return{
+        onChange,
+        onSubmit,
+        values,
+    }
 }

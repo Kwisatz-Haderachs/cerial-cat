@@ -11,20 +11,42 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import {ChangeEvent} from "react";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {ReportForm} from "../Components/ReportForm";
-type ReactInput = React.InputHTMLAttributes<HTMLInputElement>;
-type InputArgs = ReportForm & Omit<ReactInput, keyof ReportForm>
+import {ReportForm, useReportForm} from "../Components/ReportForm";
 
 
-export default function ReportView{
+export default function ReportView {
 
-    interface
+    const blankReport: ReportForm = {
+        dateOfEvent: "",
+        timeOfEvent: "",
+        locationOfEvent: "",
+        eventType: false,
+        harm: false,
+        individuals: [],
+        typeOfEvent: [],
+        effectOfIncident: false,
+        witness: [],
+        witnessNumbers: [],
+        departmentsInvolved: [],
+        description: "",
+        actions: "",
+        patientName: "",
+        patientPhone: "",
+        patientSSN: "",
+        patientAddress: "",
+    }
+
+    const { onChange, onSubmit, values } = useReportForm(
+        submitReportCallback,
+        blankReport,
+    );
+
+    async function submitReportCallback(){
+        // post values to database
+    }
 
     const[dateEvent, setDateEvent] = useState("")
 
-
-    const Input =
-    };
     return (
         <Box className="App">
                 <h2>Incident Report Form</h2>
@@ -35,16 +57,17 @@ export default function ReportView{
                             <DesktopDatePicker
                                 label="Date desktop"
                                 inputFormat="MM/DD/YYYY"
-                                value={dateEvent}
+                                value={Date.now()}
+                                name = {blankReport.dateOfEvent}
                                 //(e: React.ChangeEvent<HTMLInputElement>): void
-                                onChange={() => {handleInputChange}}
+                                onChange={onChange}
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </Grid>
                         <Grid item xs={6}>
                         <TimePicker
                             label="Time"
-                            value={value}
+                            value={Date.now()}
                             name = "timeOfEvent"
                             onChange={() => handleInputChange}
                             renderInput={(params) => <TextField {...params} />}
@@ -53,18 +76,18 @@ export default function ReportView{
                     </Grid>
                 </LocalizationProvider>
             <Box>
-                <TextField variant='filled' label='Location of event' onChange={(e)=>{setReport(({...report,["locationOfEvent"]:e.target.value}))}}></TextField>
+                <TextField variant='filled' label='Location of event' onChange={onChange}></TextField>
             </Box>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                            <InputLabel id="demo-simple-select-label">Actual/Near</InputLabel>
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={'false'}
                                 label="Incident Type"
-                                onChange={(e)=>{setReport({...report, ["eventType"]: e.target.value})}}
+                                onChange={onChange}
                             >
                                 <MenuItem value={"true"}>Actual Event/Incident</MenuItem>
                                 <MenuItem value={"false"}>Near Miss/CloseCall</MenuItem>
@@ -79,7 +102,7 @@ export default function ReportView{
                                 id="demo-simple-select"
                                 value={"false"}
                                 label="harm"
-                                onChange={(e)=>{setReport({...report, ["harm"]: e.target.value})}}
+                                onChange={onChange}
                             >
                                 <MenuItem value={"true"}>Actual Event/Incident</MenuItem>
                                 <MenuItem value={"false"}>Near Miss/CloseCall</MenuItem>
