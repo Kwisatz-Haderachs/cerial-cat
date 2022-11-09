@@ -121,10 +121,46 @@ export default function ReportView() {
                     >
                     </TextInput>
                 </Box>
-                <h2>Patient Name</h2>
-                <h2> Patient SSN</h2>
-                <h2>Patient Phone</h2>
-                <h2> Patient Address</h2>
+                <Box>
+                    <TextInput
+                        withAsterisk
+                        label='Patient Name'
+                        onChange={(event ) => report.setFieldValue('patientName', event.target.value)}
+                    >
+                    </TextInput>
+                </Box>
+
+                <Box>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <TextInput
+                                withAsterisk
+                                label='Patient Phone'
+                                onChange={(event ) => report.setFieldValue('patientPhone', event.target.value)}
+                            >
+                            </TextInput>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextInput
+                                withAsterisk
+                                label='Patient SSN'
+                                onChange={(event ) => report.setFieldValue('patientSSN', event.target.value)}
+                            >
+                            </TextInput>
+                        </Grid>
+                    </Grid>
+                </Box>
+                <Box>
+                    <TextInput
+                        withAsterisk
+                        label='Patient Address'
+                        onChange={(event ) => report.setFieldValue('patientAddress', event.target.value)}
+                    >
+                    </TextInput>
+                </Box>
+                <Box>
+
+                </Box>
             </Stack>
         </Box>
     );
