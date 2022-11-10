@@ -1,11 +1,9 @@
 import React from 'react';
-import { z } from 'zod';
 import {TextInput, Select, Checkbox, MultiSelect, Button, createStyles} from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
-import { useForm, zodResolver } from '@mantine/form';
+import { useForm} from '@mantine/form';
 import {Grid, Stack, Box} from "@mui/material";
-
-
+import axios from "axios";
 
 
 export default function ReportView() {
@@ -120,7 +118,7 @@ export default function ReportView() {
     }
 
 
-    function handleSubmit(values: FormValues) {
+  async function handleSubmit (values: FormValues) {
         console.log(values);
         report.isValid();
         report.validate();
@@ -128,10 +126,36 @@ export default function ReportView() {
         console.log("Validated")
         let date = convertDate(values.dateOfEvent)
         let time = convertTime(values.timeOfEvent)
+        let dateTime = date + " " + time
         console.log(time)
         console.log(date)
         console.log(report)
         //post request
+
+       await axios.post("http://localhost:8080/Report", {
+            "dateTime": dateTime,
+            "location": report.values.locationOfEvent,
+            "eventType": report.values.eventType,
+            "harm": report.values.harm,
+            "individualsInvolved": report.values.individuals,
+            "eventCategory": report.values.typeOfEvent,
+            "incidentEffect": report.values.effectOfIncident,
+            "witnessName": report.values.witness,
+            "witnessTelephone": report.values.witnessNumbers,
+            "departmentsInvolved": report.values.departmentsInvolved,
+            "description": report.values.description,
+            "action": report.values.actions,
+            "patientName": report.values.patientName,
+            "patientPhone": report.values.patientPhone,
+            "patientSSN": report.values.patientSSN,
+            "patientAddress": report.values.patientAddress,
+        }).then((response) => {
+            console.log(response)
+
+       } ).catch((error) => {
+           console.log(error)
+       })
+
     }
 
 
