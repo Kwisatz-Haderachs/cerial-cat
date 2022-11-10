@@ -1,28 +1,33 @@
 import React from 'react';
-import {TextInput, Select, Checkbox, MultiSelect} from '@mantine/core';
+import { z } from 'zod';
+import {TextInput, Select, Checkbox, MultiSelect, Button, createStyles} from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
-import { useForm } from '@mantine/form';
+import { useForm, zodResolver } from '@mantine/form';
 import {Grid, Stack, Box} from "@mui/material";
+
+
 
 
 export default function ReportView() {
 
+    const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
+
     const departments = [
-        {value: 'Ambulatory Care'},
-        {value: 'Behavioral/Mental Health'},
-        {value: 'Dental'},
-        {value: 'Emergency Care'},
-        {value: 'Information Management'},
-        {value: 'Laboratory'},
-        {value: 'Logistics'},
-        {value: 'Medicine'},
-        {value: 'Nursing'},
-        {value: 'OB/GYN'},
-        {value: 'Pediatrics'},
-        {value: 'Pharmacy'},
-        {value: 'Radiology'},
-        {value: 'Surgery'},
-        {value: 'Other'}
+        {value: 'Ambulatory Care', label: 'Ambulatory Care'},
+        {value: 'Behavioral/Mental Health', label: 'Behavioral/Mental Health'},
+        {value: 'Dental', label: 'Dental'},
+        {value: 'Emergency Care', label: 'Emergency Care'},
+        {value: 'Information Management', label: 'Information Management'},
+        {value: 'Laboratory', label: 'Laboratory'},
+        {value: 'Logistics', label: 'Logistics'},
+        {value: 'Medicine', label: 'Medicine'},
+        {value: 'Nursing', label: 'Nursing'},
+        {value: 'OB/GYN', label: 'OB/GYN'},
+        {value: 'Pediatrics', label: 'Pediatrics'},
+        {value: 'Pharmacy', label: 'Pharmacy'},
+        {value: 'Radiology', label: 'Radiology'},
+        {value: 'Surgery', label: 'Surgery'},
+        {value: 'Other', label: 'Other'}
     ];
 
     // const individualsInvolved = [
@@ -36,29 +41,29 @@ export default function ReportView() {
     // ];
 
     const eventsType = [
-        {value: 'Adverse Drug Reaction'},
-        {value: 'AMA/ Left without being seen'},
-        {value: 'Assault'},
-        {value: 'Blood Products Related'},
-        {value: 'Delay in Diagnosis / Treatment / Transfer'},
-        {value: 'Equipment/Supply Problem'},
-        {value: 'Exposure to Blood / Bodily Fluids'},
-        {value: 'Facility /  Physical Plant Problem'},
-        {value: 'Fall'},
-        {value: 'Infant Abduction'},
-        {value: 'Infant Discharged to Wrong Family'},
-        {value: 'Laboratory Related'},
-        {value: 'Medication Related'},
-        {value: 'Needle Stick / Sharp Injury'},
-        {value: 'Obstetrics Related'},
-        {value: 'Operative / Invasive Procedure Related'},
-        {value: 'Property Damaged / Destroyed'},
-        {value: 'Property Lost / Stolen'},
-        {value: 'Radiology Related'},
-        {value: 'Rape'},
-        {value: 'Restrained Patient Injury'},
-        {value: 'Suicide in a 24 Hour Facility'},
-        {value: 'Other'}
+        {value: 'Adverse Drug Reaction', label: 'Adverse Drug Reaction'},
+        {value: 'AMA/ Left without being seen', label: 'AMA/ Left without being seen'},
+        {value: 'Assault', label: 'Assault'},
+        {value: 'Blood Products Related', label: 'Blood Products Related'},
+        {value: 'Delay in Diagnosis / Treatment / Transfer', label: 'Delay in Diagnosis / Treatment / Transfer'},
+        {value: 'Equipment/Supply Problem', label: 'Equipment/Supply Problem'},
+        {value: 'Exposure to Blood / Bodily Fluids', label: 'Exposure to Blood / Bodily Fluids'},
+        {value: 'Facility /  Physical Plant Problem', label: 'Facility /  Physical Plant Problem'},
+        {value: 'Fall', label: 'Fall'},
+        {value: 'Infant Abduction', label: 'Infant Abduction'},
+        {value: 'Infant Discharged to Wrong Family', label: 'Infant Discharged to Wrong Family'},
+        {value: 'Laboratory Related', label: 'Laboratory Related'},
+        {value: 'Medication Related', label: 'Medication Related'},
+        {value: 'Needle Stick / Sharp Injury', label: 'Needle Stick / Sharp Injury'},
+        {value: 'Obstetrics Related', label: 'Obstetrics Related'},
+        {value: 'Operative / Invasive Procedure Related', label: 'Operative / Invasive Procedure Related'},
+        {value: 'Property Damaged / Destroyed', label: 'Property Damaged / Destroyed'},
+        {value: 'Property Lost / Stolen', label: 'Property Lost / Stolen'},
+        {value: 'Radiology Related', label: 'Radiology Related'},
+        {value: 'Rape', label: 'Rape'},
+        {value: 'Restrained Patient Injury', label: 'Restrained Patient Injury'},
+        {value: 'Suicide in a 24 Hour Facility', label: 'Suicide in a 24 Hour Facility'},
+        {value: 'Other', label: 'Other'}
     ];
 
 
@@ -83,10 +88,11 @@ export default function ReportView() {
             patientSSN: "",
             patientAddress: "",
         },
+        validateInputOnChange: true,
 
         validate: {
-            dateOfEvent: (value) => (/^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$/.test(value) ? null : "Invalid date"),
-            timeOfEvent: (value) =>  (/^(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$/.test(value) ? null : "Invalid Time" ),
+            //dateOfEvent: (value) => (/^(2\d{3}-(0[1-9]|1[0-9])-(0[1-9]|[12]\d|3[01]))/.test(value.toLocaleString()) ? null : "Invalid date"),
+            //timeOfEvent: (value) =>  (/^(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$/.test(value) ? null : "Invalid Time" ),
             locationOfEvent: (value) => (value.length < 8 ? 'Location input is too short' : null),
             witness: (value) => (value.length < 4 ? 'Please enter first and last name' : null),
             description:(value) => (value.length < 15 ? 'Enter a more detailed description' : null),
@@ -99,25 +105,66 @@ export default function ReportView() {
 
     });
 
+    type FormValues = typeof report.values;
+
+    function convertDate(inputFormat: string) {
+        function pad(s: number) { return (s < 10) ? '0' + s : s; }
+        var d = new Date(inputFormat)
+        return [pad(d.getFullYear()), pad(d.getMonth()+1), d.getDate()].join('-')
+    }
+
+    function convertTime(inputFormat: string) {
+
+        var t = new Date(inputFormat)
+        return (`${t.getHours()}:${t.getMinutes()}`)
+    }
+
+
+    function handleSubmit(values: FormValues) {
+        console.log(values);
+        report.isValid();
+        report.validate();
+        //report.errors;
+        console.log("Validated")
+        let date = convertDate(values.dateOfEvent)
+        let time = convertTime(values.timeOfEvent)
+        console.log(time)
+        console.log(date)
+        console.log(report)
+        //post request
+    }
+
+
     return (
+
         <Box className="App">
-                <h2>Incident Report Form</h2>
+            <form onSubmit={report.onSubmit(
+                //report.validate,
+                handleSubmit
+            )}>
+            <h2>Incident Report Form</h2>
             <Stack>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <DatePicker
                                 label={"Date of Event"}
+                                inputFormat={"YYYY-MM-DD"}
                                 withAsterisk
-                                defaultValue={new Date()}
-                                onChange={(event :Date) => report.setFieldValue('dateOfEvent', event.toDateString())}
+                                required
+                                defaultValue={date}
+                                {...report.getInputProps(('dateOfEvent'))}
+
+                                //onChange={(event :Date) => report.setFieldValue('dateOfEvent', event.toDateString())}
                              />
                         </Grid>
                         <Grid item xs={6}>
                         <TimeInput
                             withAsterisk
+                            required
                             label={"Time of Event"}
-                            defaultValue={new Date()}
-                            onChange={(event :Date) => report.setFieldValue('timeOfEvent', event.toDateString())}
+                            defaultValue={date}
+                            {...report.getInputProps(('timeOfEvent'))}
+                            // onChange={(event :Date) => report.setFieldValue('timeOfEvent', event.toDateString())}
                         />
                         </Grid>
                     </Grid>
@@ -126,6 +173,7 @@ export default function ReportView() {
                     withAsterisk
                     label='Location of event'
                     onChange={(event ) => report.setFieldValue('locationOfEvent', event.target.value)}
+                    //classNames={{ input: classes.invalid }}
                 >
                 </TextInput>
             </Box>
@@ -135,10 +183,10 @@ export default function ReportView() {
                             withAsterisk
                             label="Incident Type"
                             data={[
-                                {value: 'Actual Event/Incident', label: "Actual Event/Incident"},
-                                {value: 'Near Miss/CloseCall', label: "Near Miss/CloseCall"}
+                                {value: true, label: "Actual Event/Incident"},
+                                {value: false, label: "Near Miss/CloseCall"}
                             ]}
-                            onChange={(event: string ) => report.setFieldValue('eventType', (event === 'Actual Event/Incident'))}
+                            {...report.getInputProps('eventType')}
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -146,41 +194,43 @@ export default function ReportView() {
                             withAsterisk
                             label="Harm"
                             data={[
-                                {value: 'Harm', label: "Harm"},
-                                {value: 'Potential Harm', label: "Potential Harm"}
+                                {value: true, label: "Harm"},
+                                {value: false, label: "Potential Harm"}
                             ]}
-                            onChange={(event: string ) => report.setFieldValue('harm', (event === 'Harm'))}
+                            {...report.getInputProps('harm')}
                         />
                     </Grid>
                 </Grid>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
-                        <Checkbox label="Patient" onChange={() =>  report.insertListItem('individuals', "Patient")}/>
+                        <Checkbox label="Patient"   {...report.getInputProps('individuals')}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <Checkbox label="Staff Member" onChange={() =>  report.insertListItem('individuals', "Staff Member")}/>
+                        <Checkbox label="Staff Member"  {...report.getInputProps('individuals')}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <Checkbox label="Family Member - Adult" onChange={() =>  report.insertListItem('individuals', "Family Member - Adult")}/>
+                        <Checkbox label="Family Member - Adult"   {...report.getInputProps('individuals')}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <Checkbox label="Visitor" onChange={() =>  report.insertListItem('individuals', "Visitor")}/>
+                        <Checkbox label="Visitor"   {...report.getInputProps('individuals')}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <Checkbox label="Family Member - Child" onChange={() =>  report.insertListItem('individuals', "Family Member - Child")}/>
+                        <Checkbox label="Family Member - Child"   {...report.getInputProps('individuals')}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <Checkbox label="Volunteer" onChange={() =>  report.insertListItem('individuals', "Volunteer")}/>
+                        <Checkbox label="Volunteer" {...report.getInputProps('individuals')}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <Checkbox label="Other" onChange={() =>  report.insertListItem('individuals', "Other")}/>
+                        <Checkbox label="Other" {...report.getInputProps('individuals')}/>
                     </Grid>
                 </Grid>
                 <Box>
                     <MultiSelect
+                        withAsterisk
                         data={eventsType}
                         placeholder="Select Type of Event"
                         label="Type of Event"
+                        {...report.getInputProps('typeOfEvent')}
                     />
                 </Box>
                 <Box>
@@ -188,10 +238,12 @@ export default function ReportView() {
                         withAsterisk
                         label="Effect of Incident"
                         data={[
-                            {value: 'Harm sustained', label: "Harm"},
-                            {value: 'Potential Harm', label: "Potential Harm"}
+                            {value: true, label: "Harm sustained"},
+                            {value: false, label: "Potential Harm"}
                         ]}
-                        onChange={(event: string ) => report.setFieldValue('effectOfIncident', (event === 'Harm'))}
+                        {...report.getInputProps('effectOfIncident')}
+
+                        //onChange={(event: string ) => report.setFieldValue('effectOfIncident', (event === 'Harm'))}
                     />
                 </Box>
                 <Grid container spacing={2}>
@@ -199,7 +251,7 @@ export default function ReportView() {
                         <TextInput
                             withAsterisk
                             label='Witness'
-                            onChange={(event ) => report.insertListItem('witness', event.target.value)}
+                            {...report.getInputProps('witness')}
                         >
                         </TextInput>
                     </Grid>
@@ -207,7 +259,7 @@ export default function ReportView() {
                         <TextInput
                             withAsterisk
                             label='Witness Number'
-                            onChange={(event ) => report.insertListItem('witnessNumbers', event.target.value)}
+                            {...report.getInputProps('witnessNumbers')}
                         >
                         </TextInput>
                     </Grid>
@@ -242,16 +294,19 @@ export default function ReportView() {
                 </Grid>
                 <Box>
                     <MultiSelect
+                        withAsterisk
                         data={departments}
                         placeholder="Select Departments"
                         label="Departments Involved"
+                        {...report.getInputProps('departmentsInvolved')}
                         />
                 </Box>
                 <Box>
                     <TextInput
                         withAsterisk
                         label='Description'
-                        onChange={(event ) => report.setFieldValue('description', event.target.value)}
+                        {...report.getInputProps('description')}
+                        //classNames={{ input: classes.invalid }}
                     >
                     </TextInput>
                 </Box>
@@ -259,7 +314,8 @@ export default function ReportView() {
                     <TextInput
                         withAsterisk
                         label='Actions'
-                        onChange={(event ) => report.setFieldValue('actions', event.target.value)}
+                        {...report.getInputProps('actions')}
+                        //classNames={{ input: classes.invalid }}
                     >
                     </TextInput>
                 </Box>
@@ -267,7 +323,8 @@ export default function ReportView() {
                     <TextInput
                         withAsterisk
                         label='Patient Name'
-                        onChange={(event ) => report.setFieldValue('patientName', event.target.value)}
+                        {...report.getInputProps('patientName')}
+                        //classNames={{ input: classes.invalid }}
                     >
                     </TextInput>
                 </Box>
@@ -278,7 +335,8 @@ export default function ReportView() {
                             <TextInput
                                 withAsterisk
                                 label='Patient Phone'
-                                onChange={(event ) => report.setFieldValue('patientPhone', event.target.value)}
+                                {...report.getInputProps('patientPhone')}
+                                //classNames={{ input: classes.invalid }}
                             >
                             </TextInput>
                         </Grid>
@@ -286,7 +344,8 @@ export default function ReportView() {
                             <TextInput
                                 withAsterisk
                                 label='Patient SSN'
-                                onChange={(event ) => report.setFieldValue('patientSSN', event.target.value)}
+                                {...report.getInputProps('patientSSN')}
+                                //classNames={{ input: classes.invalid }}
                             >
                             </TextInput>
                         </Grid>
@@ -296,15 +355,28 @@ export default function ReportView() {
                     <TextInput
                         withAsterisk
                         label='Patient Address'
-                        onChange={(event ) => report.setFieldValue('patientAddress', event.target.value)}
+                        {...report.getInputProps('patientAddress')}
                     >
                     </TextInput>
                 </Box>
                 <Box>
-                    <h2> Submit </h2>
+                    <Button style={{backgroundColor: "Green"}} type={"submit"} >Submit</Button>
                 </Box>
             </Stack>
+            </form>
         </Box>
     );
 }
+// const useStyles = createStyles((theme) => ({
+//     invalid: {
+//         backgroundColor:
+//             theme.colorScheme === 'dark' ? theme.fn.rgba(theme.colors.red[8], 0.15) : theme.colors.red[0],
+//     },
+//
+//     icon: {
+//         color: theme.colors.red[theme.colorScheme === 'dark' ? 7 : 6],
+//     },
+// }));
+//
+// const { classes } = useStyles();
 
