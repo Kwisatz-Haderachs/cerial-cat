@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function ReportView() {
 
-    const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
+    //const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
 
     const departments = [
         {value: 'Ambulatory Care', label: 'Ambulatory Care'},
@@ -28,15 +28,15 @@ export default function ReportView() {
         {value: 'Other', label: 'Other'}
     ];
 
-    // const individualsInvolved = [
-    //     {value: 'Patient'},
-    //     {value: 'Family Member - Adult'},
-    //     {value: 'Family Member - Child'},
-    //     {value: 'Staff Member'},
-    //     {value: 'Visitor'},
-    //     {value: 'Volunteer'},
-    //     {value: 'Other'}
-    // ];
+    const individualsInvolved = [
+        {value: 'Patient', label: 'Patient'},
+        {value: 'Family Member - Adult', label: 'Family Member - Adult'},
+        {value: 'Family Member - Child', label: 'Family Member - Child'},
+        {value: 'Staff Member', label: 'Staff Member'},
+        {value: 'Visitor', label: 'Visitor'},
+        {value: 'Volunteer', label: 'Volunteer'},
+        {value: 'Other', label: 'Other'}
+    ];
 
     const eventsType = [
         {value: 'Adverse Drug Reaction', label: 'Adverse Drug Reaction'},
@@ -65,7 +65,6 @@ export default function ReportView() {
     ];
 
 
-
     const report = useForm({
         initialValues: {
             dateOfEvent: "",
@@ -76,8 +75,12 @@ export default function ReportView() {
             individuals: [],
             typeOfEvent: [],
             effectOfIncident: false,
-            witness: [],
-            witnessNumbers: [],
+            witness1: "",
+            witnessNumbers1: "",
+            witness2: "",
+            witnessNumbers2: "",
+            witness3: "",
+            witnessNumbers3: "",
             departmentsInvolved: [],
             description: "",
             actions: "",
@@ -92,12 +95,17 @@ export default function ReportView() {
             //dateOfEvent: (value) => (/^(2\d{3}-(0[1-9]|1[0-9])-(0[1-9]|[12]\d|3[01]))/.test(value.toLocaleString()) ? null : "Invalid date"),
             //timeOfEvent: (value) =>  (/^(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$/.test(value) ? null : "Invalid Time" ),
             locationOfEvent: (value) => (value.length < 8 ? 'Location input is too short' : null),
-            witness: (value) => (value.length < 4 ? 'Please enter first and last name' : null),
             description:(value) => (value.length < 15 ? 'Enter a more detailed description' : null),
             actions:(value) => (value.length < 15 ? 'Enter more detailed action' : null),
             patientName:(value) => (value.length < 3 ? 'Enter full name' : null),
-            patientPhone:(value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number" ),
-            patientSSN:(value) => (/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid SSN" ),
+            witness1: (value) => (value.length < 3 ? 'Enter full name' : null),
+            witness2: (value) => (value.length < 3 ? 'Enter full name' : null),
+            witness3: (value) => (value.length < 3 ? 'Enter full name' : null),
+            witnessNumbers1: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
+            witnessNumbers2: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
+            witnessNumbers3: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
+            patientPhone:(value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
+            patientSSN:(value) => (/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid SSN: use ###-###-####\"" ),
             patientAddress: (value) => (value.length < 10 ? 'Enter full Address' : null),
         }
 
@@ -112,7 +120,6 @@ export default function ReportView() {
     }
 
     function convertTime(inputFormat: string) {
-
         var t = new Date(inputFormat)
         return (`${t.getHours()}:${t.getMinutes()}`)
     }
@@ -122,17 +129,19 @@ export default function ReportView() {
         console.log(values);
         report.isValid();
         report.validate();
-        //report.errors;
-        console.log("Validated")
-        let date = convertDate(values.dateOfEvent)
-        let time = convertTime(values.timeOfEvent)
-        let dateTime = date + " " + time
-        console.log(time)
-        console.log(date)
-        console.log(report)
+      console.log(report)
+      console.log("Validated")
+      let date = convertDate(values.dateOfEvent)
+      let time = convertTime(values.timeOfEvent)
+      let dateTime = date + " " + time
+      console.log(time)
+      console.log(date)
         //post request
 
-       await axios.post("http://localhost:8080/Report", {
+        let witnessNames = [report.values.witness1, report.values.witness2, report.values.witness3 ]
+        let witnessNumbers = [report.values.witnessNumbers1, report.values.witnessNumbers2, report.values.witnessNumbers3]
+
+        await axios.post("http://localhost:8080/Report", {
             "dateTime": dateTime,
             "location": report.values.locationOfEvent,
             "eventType": report.values.eventType,
@@ -140,8 +149,8 @@ export default function ReportView() {
             "individualsInvolved": report.values.individuals,
             "eventCategory": report.values.typeOfEvent,
             "incidentEffect": report.values.effectOfIncident,
-            "witnessName": report.values.witness,
-            "witnessTelephone": report.values.witnessNumbers,
+            "witnessName": witnessNames,
+            "witnessTelephone": witnessNumbers,
             "departmentsInvolved": report.values.departmentsInvolved,
             "description": report.values.description,
             "action": report.values.actions,
@@ -158,14 +167,9 @@ export default function ReportView() {
 
     }
 
-
     return (
-
         <Box className="App">
-            <form onSubmit={report.onSubmit(
-                //report.validate,
-                handleSubmit
-            )}>
+            <form onSubmit={report.onSubmit(handleSubmit)}>
             <h2>Incident Report Form</h2>
             <Stack>
                     <Grid container spacing={2}>
@@ -175,10 +179,8 @@ export default function ReportView() {
                                 inputFormat={"YYYY-MM-DD"}
                                 withAsterisk
                                 required
-                                defaultValue={date}
+                                defaultValue={new Date()}
                                 {...report.getInputProps(('dateOfEvent'))}
-
-                                //onChange={(event :Date) => report.setFieldValue('dateOfEvent', event.toDateString())}
                              />
                         </Grid>
                         <Grid item xs={6}>
@@ -186,15 +188,15 @@ export default function ReportView() {
                             withAsterisk
                             required
                             label={"Time of Event"}
-                            defaultValue={date}
+                            defaultValue={new Date()}
                             {...report.getInputProps(('timeOfEvent'))}
-                            // onChange={(event :Date) => report.setFieldValue('timeOfEvent', event.toDateString())}
                         />
                         </Grid>
                     </Grid>
             <Box>
                 <TextInput
                     withAsterisk
+                    required
                     label='Location of event'
                     onChange={(event ) => report.setFieldValue('locationOfEvent', event.target.value)}
                     //classNames={{ input: classes.invalid }}
@@ -205,6 +207,7 @@ export default function ReportView() {
                     <Grid item xs={6}>
                         <Select
                             withAsterisk
+                            required
                             label="Incident Type"
                             data={[
                                 {value: true, label: "Actual Event/Incident"},
@@ -216,6 +219,7 @@ export default function ReportView() {
                     <Grid item xs={6}>
                         <Select
                             withAsterisk
+                            required
                             label="Harm"
                             data={[
                                 {value: true, label: "Harm"},
@@ -225,32 +229,20 @@ export default function ReportView() {
                         />
                     </Grid>
                 </Grid>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <Checkbox label="Patient"   {...report.getInputProps('individuals')}/>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Checkbox label="Staff Member"  {...report.getInputProps('individuals')}/>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Checkbox label="Family Member - Adult"   {...report.getInputProps('individuals')}/>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Checkbox label="Visitor"   {...report.getInputProps('individuals')}/>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Checkbox label="Family Member - Child"   {...report.getInputProps('individuals')}/>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Checkbox label="Volunteer" {...report.getInputProps('individuals')}/>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Checkbox label="Other" {...report.getInputProps('individuals')}/>
-                    </Grid>
-                </Grid>
                 <Box>
                     <MultiSelect
                         withAsterisk
+                        required
+                        data={individualsInvolved}
+                        placeholder="Individuals"
+                        label="Individuals Involved"
+                        {...report.getInputProps('individuals')}
+                    />
+                </Box>
+                <Box>
+                    <MultiSelect
+                        withAsterisk
+                        required
                         data={eventsType}
                         placeholder="Select Type of Event"
                         label="Type of Event"
@@ -260,58 +252,59 @@ export default function ReportView() {
                 <Box>
                     <Select
                         withAsterisk
+                        required
                         label="Effect of Incident"
                         data={[
                             {value: true, label: "Harm sustained"},
                             {value: false, label: "Potential Harm"}
                         ]}
                         {...report.getInputProps('effectOfIncident')}
-
-                        //onChange={(event: string ) => report.setFieldValue('effectOfIncident', (event === 'Harm'))}
                     />
                 </Box>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <TextInput
                             withAsterisk
+                            required
                             label='Witness'
-                            {...report.getInputProps('witness')}
+                            {...report.getInputProps('witness1')}
                         >
                         </TextInput>
                     </Grid>
                     <Grid item xs={6}>
                         <TextInput
                             withAsterisk
+                            required
                             label='Witness Number'
-                            {...report.getInputProps('witnessNumbers')}
+                            {...report.getInputProps('witnessNumbers1')}
                         >
                         </TextInput>
                     </Grid>
                     <Grid item xs={6}>
                         <TextInput
                             label='Witness'
-                            onChange={(event ) => report.insertListItem('witness', event.target.value)}
+                            {...report.getInputProps('witness2')}
                         >
                         </TextInput>
                     </Grid>
                     <Grid item xs={6}>
                         <TextInput
                             label='Witness Number'
-                            onChange={(event ) => report.insertListItem('witnessNumbers', event.target.value)}
+                            {...report.getInputProps('witnessNumbers2')}
                         >
                         </TextInput>
                     </Grid>
                     <Grid item xs={6}>
                         <TextInput
                             label='Witness'
-                            onChange={(event ) => report.insertListItem('witness', event.target.value)}
+                            {...report.getInputProps('witness3')}
                         >
                         </TextInput>
                     </Grid>
                     <Grid item xs={6}>
                         <TextInput
                             label='Witness Number'
-                            onChange={(event ) => report.insertListItem('witnessNumbers', event.target.value)}
+                            {...report.getInputProps('witnessNumbers3')}
                         >
                         </TextInput>
                     </Grid>
@@ -319,6 +312,7 @@ export default function ReportView() {
                 <Box>
                     <MultiSelect
                         withAsterisk
+                        required
                         data={departments}
                         placeholder="Select Departments"
                         label="Departments Involved"
@@ -328,6 +322,7 @@ export default function ReportView() {
                 <Box>
                     <TextInput
                         withAsterisk
+                        required
                         label='Description'
                         {...report.getInputProps('description')}
                         //classNames={{ input: classes.invalid }}
@@ -337,6 +332,7 @@ export default function ReportView() {
                 <Box>
                     <TextInput
                         withAsterisk
+                        required
                         label='Actions'
                         {...report.getInputProps('actions')}
                         //classNames={{ input: classes.invalid }}
@@ -346,6 +342,7 @@ export default function ReportView() {
                 <Box>
                     <TextInput
                         withAsterisk
+                        required
                         label='Patient Name'
                         {...report.getInputProps('patientName')}
                         //classNames={{ input: classes.invalid }}
@@ -358,6 +355,7 @@ export default function ReportView() {
                         <Grid item xs={6}>
                             <TextInput
                                 withAsterisk
+                                required
                                 label='Patient Phone'
                                 {...report.getInputProps('patientPhone')}
                                 //classNames={{ input: classes.invalid }}
@@ -367,6 +365,7 @@ export default function ReportView() {
                         <Grid item xs={6}>
                             <TextInput
                                 withAsterisk
+                                required
                                 label='Patient SSN'
                                 {...report.getInputProps('patientSSN')}
                                 //classNames={{ input: classes.invalid }}
@@ -378,6 +377,7 @@ export default function ReportView() {
                 <Box>
                     <TextInput
                         withAsterisk
+                        required
                         label='Patient Address'
                         {...report.getInputProps('patientAddress')}
                     >
