@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, Select, Checkbox, MultiSelect, Button, createStyles} from '@mantine/core';
+import {TextInput, Select, MultiSelect, Button} from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
 import { useForm} from '@mantine/form';
 import {Grid, Stack, Box} from "@mui/material";
@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function ReportView() {
 
-    //const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
+    const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
 
     const departments = [
         {value: 'Ambulatory Care', label: 'Ambulatory Care'},
@@ -115,27 +115,28 @@ export default function ReportView() {
 
     function convertDate(inputFormat: string) {
         function pad(s: number) { return (s < 10) ? '0' + s : s; }
-        var d = new Date(inputFormat)
+        let d = new Date(inputFormat)
         return [pad(d.getFullYear()), pad(d.getMonth()+1), d.getDate()].join('-')
     }
 
     function convertTime(inputFormat: string) {
-        var t = new Date(inputFormat)
-        return (`${t.getHours()}:${t.getMinutes()}`)
+        function pad(s: number) { return (s < 6) ? '0' + s : s; }
+        let t = new Date(inputFormat)
+        console.log(t)
+        return [pad(t.getHours()), pad(t.getMinutes())].join(':')
     }
 
 
   async function handleSubmit (values: FormValues) {
-        console.log(values);
         report.isValid();
         report.validate();
-      console.log(report)
-      console.log("Validated")
-      let date = convertDate(values.dateOfEvent)
-      let time = convertTime(values.timeOfEvent)
-      let dateTime = date + " " + time
-      console.log(time)
-      console.log(date)
+        console.log(report)
+        console.log("Validated")
+        let date = convertDate(values.dateOfEvent)
+        let time = convertTime(values.timeOfEvent)
+        let dateTime = date + " " + time
+        console.log(time)
+        console.log(date)
         //post request
 
         let witnessNames = [report.values.witness1, report.values.witness2, report.values.witness3 ]
