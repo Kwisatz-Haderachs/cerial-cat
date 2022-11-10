@@ -105,7 +105,7 @@ export default function ReportView() {
             witnessNumbers2: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
             witnessNumbers3: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
             patientPhone:(value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
-            patientSSN:(value) => (/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid SSN: use ###-###-####\"" ),
+            patientSSN:(value) => (/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/.test(value) ? null : "Invalid SSN: use ###-##-####\"" ),
             patientAddress: (value) => (value.length < 10 ? 'Enter full Address' : null),
         }
 
