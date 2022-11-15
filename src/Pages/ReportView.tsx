@@ -105,7 +105,7 @@ export default function ReportView() {
             witnessNumbers2: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
             witnessNumbers3: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
             patientPhone:(value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
-            patientSSN:(value) => (/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/.test(value) ? null : "Invalid SSN: use ###-##-####\"" ),
+            patientSSN:(value) => (/^[0-9]{3}-[0-9]{2}-[0-9]{4}$/.test(value) ? null : "Invalid SSN: use ###-##-####" ),
             patientAddress: (value) => (value.length < 10 ? 'Enter full Address' : null),
         }
 
@@ -116,7 +116,7 @@ export default function ReportView() {
     function convertDate(inputFormat: string) {
         function pad(s: number) { return (s < 10) ? '0' + s : s; }
         let d = new Date(inputFormat)
-        return [pad(d.getFullYear()), pad(d.getMonth()+1), d.getDate()].join('-')
+        return [pad(d.getFullYear()), pad(d.getMonth()+1), pad(d.getDate()+1)].join('-')
     }
 
     function convertTime(inputFormat: string) {
@@ -158,7 +158,7 @@ export default function ReportView() {
             "patientName": report.values.patientName,
             "patientPhone": report.values.patientPhone,
             "patientSSN": report.values.patientSSN,
-            "patientAddress": report.values.patientAddress,
+            "patientAddress": report.values.patientAddress
         }).then((response) => {
             console.log(response)
 
