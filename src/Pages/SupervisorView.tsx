@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Box from "@mui/material/Box";
+import {Box, Grid } from "@mui/material";
 import axios from "axios";
 import ListReport from "../Components/ListReport";
 import SupViewReport from "../Components/SupViewReport";
@@ -19,13 +19,14 @@ export default function SupervisorView() {
 
 
     return(
-        <Box>
+        <Grid display={"flex"}  justifyContent={"center"}>
+        <Box sx={{ width: '80%' }} >
                 {itemView === null ?
                     <ListReport reportList={reportList} setItemView = {setItemView}/> :
                     <SupViewReport itemView = {itemView} setItemView = {setItemView} />
                 }
 
         </Box>
-
+        </Grid>
     )
 }

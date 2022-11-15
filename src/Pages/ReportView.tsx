@@ -206,7 +206,8 @@ export default function ReportView() {
 
 
     return (
-        <Box className="App">
+        <Grid display={"flex"} justifyContent={"center"}>
+        <Box className="App" sx={{ width: '80%' }} >
             {notify()}
             <form onSubmit={report.onSubmit(handleSubmit)}>
             <h2>Incident Report Form</h2>
@@ -428,6 +429,7 @@ export default function ReportView() {
             </Stack>
             </form>
         </Box>
+        </Grid>
     );
 }
 // const useStyles = createStyles((theme) => ({

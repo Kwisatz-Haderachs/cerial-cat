@@ -43,7 +43,8 @@ export default function SupViewReport(props: any) {
 
 
     return (
-        <Box className="App">
+        <Grid display={"flex"}  justifyContent={"center"}>
+        <Box className="App" sx={{ width: '80%' }}>
                 <h2>Incident Report Form</h2>
                 <Stack>
                     <Grid container spacing={2}>
@@ -252,6 +253,7 @@ export default function SupViewReport(props: any) {
                         <Button onClick = {()=> {handleClick()}}> Send to Command</Button>
                     </Box>
                 </Stack>
-        </Box>
+            </Box>
+        </Grid>
         )
 }
