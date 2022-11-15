@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import axios from "axios";
+import ListReport from "../Components/ListReport";
+import SupViewReport from "../Components/SupViewReport";
 
 export default function SupervisorView() {
-    const [reportList, setReportList] = useState([])
+    const [reportList, setReportList] = useState([]);
+    const [itemView, setItemView] = useState(null)
 
     useEffect(() => {
         getData().then(r => {console.log(r)});
@@ -15,26 +18,12 @@ export default function SupervisorView() {
     }
 
 
-    // const fetchAllData: React.FC = props => {
-    //     useEffect(() => {
-    //         async function getData() {
-    //             let data = await axios.get("http://localhost:8080/Report")
-    //                 .then(response => {
-    //                     console.log(response)
-    //                 })
-    //                 .catch(error => {
-    //                     console.log(error)
-    //                 })
-    //         }
-    //         getData();
-    //     }, []);
-    // };
-
     return(
         <Box>
-            <ul>
-
-            </ul>
+                {itemView === null ?
+                    <ListReport reportList={reportList} setItemView = {setItemView}/> :
+                    <SupViewReport itemView = {itemView} setItemView = {setItemView} />
+                }
 
         </Box>
 
