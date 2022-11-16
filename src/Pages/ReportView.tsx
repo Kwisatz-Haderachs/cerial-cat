@@ -144,8 +144,8 @@ export default function ReportView() {
 
         validate: {
             //dateOfEvent: (value) => (/^(2\d{3}-(0[1-9]|1[0-9])-(0[1-9]|[12]\d|3[01]))/.test(value.toLocaleString()) ? null : "Invalid date"),
-            //timeOfEvent: (value) =>  (/^(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$/.test(value) ? null : "Invalid Time" ),
-            locationOfEvent: (value) => (value.length < 8 ? 'Location input is too short' : null),
+            timeOfEvent: (value) => (/^([01]\d|2[0-3]):([0-5]\d)$/.test(value) ? null : "Enter Military Time as ##:##" ),
+            locationOfEvent: (value) => (value.length < 10 ? 'Location input is too short' : null),
             description:(value) => (value.length < 15 ? 'Enter a more detailed description' : null),
             actions:(value) => (value.length < 15 ? 'Enter more detailed action' : null),
             patientName:(value) => (value.length < 3 ? 'Enter full name' : null),
@@ -194,7 +194,8 @@ export default function ReportView() {
         console.log(report)
         console.log("Validated")
         let date = convertDate(values.dateOfEvent)
-        let time = convertTime(values.timeOfEvent)
+        let time = values.timeOfEvent
+        console.log(time)
         let dateTime = date + " " + time
         console.log(time)
         console.log(date)
@@ -255,13 +256,13 @@ export default function ReportView() {
                              />
                         </Grid>
                         <Grid item xs={6}>
-                        <TimeInput
-                            withAsterisk
-                            required
-                            label={"Time of Event"}
-                            defaultValue={new Date()}
-                            {...report.getInputProps(('timeOfEvent'))}
-                        />
+                            <TextInput
+                                withAsterisk
+                                required
+                                label={"Time of Event"}
+                                defaultValue={"00:00"}
+                                {...report.getInputProps(('timeOfEvent'))}
+                            />
                         </Grid>
                     </Grid>
             <Box>
