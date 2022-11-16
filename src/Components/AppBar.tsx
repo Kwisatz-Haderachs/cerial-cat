@@ -2,10 +2,9 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { Anchor } from '@mantine/core';
+import {Link} from "react-router-dom";
 
 export default function ButtonAppBar() {
     return (
@@ -19,9 +18,11 @@ export default function ButtonAppBar() {
                         aria-label="menu"
                         sx={{ mr: 2 }}
                     >
-                    <Anchor href="http://localhost:3000/report" target="report">
-                        Report
-                    </Anchor>
+                        <Link style={{color:"inherit"}} to={"/report"}>
+                            <Button
+                                variant={'contained'}
+                            >Report</Button>
+                        </Link>
                     </IconButton>
                     <IconButton
                         size="large"
@@ -30,9 +31,11 @@ export default function ButtonAppBar() {
                         aria-label="menu"
                         sx={{ mr: 2 }}
                     >
-                        <Anchor href="http://localhost:3000/view" target="view">
-                            View
-                        </Anchor>
+                        <Link style={{color:"inherit"}} to={"/view"}>
+                            <Button
+                                variant={'contained'}
+                            >View</Button>
+                        </Link>
                     </IconButton>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
