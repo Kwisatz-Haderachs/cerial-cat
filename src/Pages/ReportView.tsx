@@ -9,7 +9,33 @@ import axios from "axios";
 export default function ReportView() {
     const [status, setStatus] = useState(0);
 
+    const  INIT_VALUE = {
+        dateOfEvent: "",
+        //timeOfEvent: convertTime(""),
+        locationOfEvent: "",
+        eventType: false,
+        harm: false,
+        individuals: [],
+        typeOfEvent: [],
+        effectOfIncident: false,
+        witness1: "",
+        witnessNumbers1: "",
+        witness2: "",
+        witnessNumbers2: "",
+        witness3: "",
+        witnessNumbers3: "",
+        departmentsInvolved: [],
+        description: "",
+        actions: "",
+        patientName: "",
+        patientPhone: "",
+        patientSSN: "",
+        patientAddress: "",
+    }
+
     const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
+
+    
 
     useEffect(()=> {
         setTimeout(()=>{
@@ -153,10 +179,10 @@ export default function ReportView() {
                 break;
             }
         }
-        console.log(s)
+      //  console.log(s)
         if(s.length < 5){
             s = '0' + t.substring(0, 4);
-            console.log(s);
+     //       console.log(s);
         }
         return s;
     }
@@ -197,9 +223,14 @@ export default function ReportView() {
         }).then((response) => {
             console.log(response)
             setStatus(response.status)
+            report.setValues(INIT_VALUE)
+            
+    
        } ).catch((error) => {
            console.log(error)
+           
        })
+
 
     }
 
@@ -209,7 +240,7 @@ export default function ReportView() {
         <Grid display={"flex"} justifyContent={"center"}>
         <Box className="App" sx={{ width: '80%' }} >
             {notify()}
-            <form onSubmit={report.onSubmit(handleSubmit)}>
+            <form onSubmit={report.onSubmit(handleSubmit)} onReset={report.onReset}>
             <h2>Incident Report Form</h2>
             <Stack>
                     <Grid container spacing={2}>
