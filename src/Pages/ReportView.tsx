@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {TextInput, Select, MultiSelect, Button} from '@mantine/core';
-import { DatePicker, TimeInput } from '@mantine/dates';
+import { DatePicker } from '@mantine/dates';
 import { useForm} from '@mantine/form';
 import {Grid, Stack, Box, Alert, AlertTitle} from "@mui/material";
 import axios from "axios";
@@ -118,7 +118,7 @@ export default function ReportView() {
 
         validate: {
             //dateOfEvent: (value) => (/^(2\d{3}-(0[1-9]|1[0-9])-(0[1-9]|[12]\d|3[01]))/.test(value.toLocaleString()) ? null : "Invalid date"),
-            //timeOfEvent: (value) =>  (/^(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$/.test(value) ? null : "Invalid Time" ),
+            timeOfEvent: (value) =>  (/^([01]\d|2[0-3]):([0-5]\d)$/.test(value) ? null : "Enter Military Time as ##:##" ),
             locationOfEvent: (value) => (value.length < 8 ? 'Location input is too short' : null),
             description:(value) => (value.length < 15 ? 'Enter a more detailed description' : null),
             actions:(value) => (value.length < 15 ? 'Enter more detailed action' : null),
@@ -144,22 +144,22 @@ export default function ReportView() {
         return [pad(d.getFullYear()), pad(d.getMonth()+1), pad(d.getDate()+1)].join('-')
     }
 
-    function convertTime(inputFormat: string) {
-        let t = new Date(inputFormat).toLocaleTimeString()
-        let s = '';
-        for (let i = t.length-1; i === 0; i--) {
-            if(t[i] === ":"){
-                s = t.substring(0, i);
-                break;
-            }
-        }
-        console.log(s)
-        if(s.length < 5){
-            s = '0' + t.substring(0, 4);
-            console.log(s);
-        }
-        return s;
-    }
+    // function convertTime(inputFormat: string) {
+    //     let t = new Date(inputFormat).toLocaleTimeString()
+    //     let s = '';
+    //     for (let i = t.length-1; i === 0; i--) {
+    //         if(t[i] === ":"){
+    //             s = t.substring(0, i);
+    //             break;
+    //         }
+    //     }
+    //     console.log(s)
+    //     if(s.length < 5){
+    //         s = '0' + t.substring(0, 4);
+    //         console.log(s);
+    //     }
+    //     return s;
+    // }
 
 
   async function handleSubmit (values: FormValues) {
@@ -168,9 +168,9 @@ export default function ReportView() {
         console.log(report)
         console.log("Validated")
         let date = convertDate(values.dateOfEvent)
-        let time = convertTime(values.timeOfEvent)
-        let dateTime = date + " " + time
+        let time = values.timeOfEvent
         console.log(time)
+        let dateTime = date + " " + values.timeOfEvent
         console.log(date)
         //post request
 
@@ -224,11 +224,11 @@ export default function ReportView() {
                              />
                         </Grid>
                         <Grid item xs={6}>
-                        <TimeInput
+                        <TextInput
                             withAsterisk
                             required
                             label={"Time of Event"}
-                            defaultValue={new Date()}
+                            defaultValue={"00:00"}
                             {...report.getInputProps(('timeOfEvent'))}
                         />
                         </Grid>
