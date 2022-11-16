@@ -1,14 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {TextInput, Select, MultiSelect, Button} from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
 import { useForm} from '@mantine/form';
-import {Grid, Stack, Box} from "@mui/material";
+import {Grid, Stack, Box, Alert, AlertTitle} from "@mui/material";
 import axios from "axios";
 
 
 export default function ReportView() {
+    const [status, setStatus] = useState(0);
 
     const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
+
+    useEffect(()=> {
+        setTimeout(()=>{
+            notify()
+            setStatus(0)
+        }, 5000)
+    },[status])
+
+    function notify(){
+        if(status === 200){
+            return(
+                <Alert variant="filled" severity="success" >
+                    <AlertTitle>Success</AlertTitle>
+                </Alert>
+            )
+        } else if( status >= 400){
+            return (
+                <Alert variant="filled" severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                </Alert>
+            )
+        }
+    }
+
 
     const departments = [
         {value: 'Ambulatory Care', label: 'Ambulatory Care'},
@@ -99,13 +124,13 @@ export default function ReportView() {
             actions:(value) => (value.length < 15 ? 'Enter more detailed action' : null),
             patientName:(value) => (value.length < 3 ? 'Enter full name' : null),
             witness1: (value) => (value.length < 3 ? 'Enter full name' : null),
-            witness2: (value) => (value.length < 3 ? 'Enter full name' : null),
-            witness3: (value) => (value.length < 3 ? 'Enter full name' : null),
+            // witness2: (value) => (value.length < 3 ? 'Enter full name' : null),
+            // witness3: (value) => (value.length < 3 ? 'Enter full name' : null),
             witnessNumbers1: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
-            witnessNumbers2: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
-            witnessNumbers3: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
+            // witnessNumbers2: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
+            // witnessNumbers3: (value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
             patientPhone:(value) => (/^1?-?\(?[0-9]{3}[\-\)][0-9]{3}-[0-9]{4}$/.test(value) ? null : "Invalid Number: use ###-###-####" ),
-            patientSSN:(value) => (/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/.test(value) ? null : "Invalid SSN: use ###-##-####\"" ),
+            patientSSN:(value) => (/^[0-9]{3}-[0-9]{2}-[0-9]{4}$/.test(value) ? null : "Invalid SSN: use ###-##-####" ),
             patientAddress: (value) => (value.length < 10 ? 'Enter full Address' : null),
         }
 
@@ -116,14 +141,24 @@ export default function ReportView() {
     function convertDate(inputFormat: string) {
         function pad(s: number) { return (s < 10) ? '0' + s : s; }
         let d = new Date(inputFormat)
-        return [pad(d.getFullYear()), pad(d.getMonth()+1), d.getDate()].join('-')
+        return [pad(d.getFullYear()), pad(d.getMonth()+1), pad(d.getDate()+1)].join('-')
     }
 
     function convertTime(inputFormat: string) {
-        function pad(s: number) { return (s < 6) ? '0' + s : s; }
-        let t = new Date(inputFormat)
-        console.log(t)
-        return [pad(t.getHours()), pad(t.getMinutes())].join(':')
+        let t = new Date(inputFormat).toLocaleTimeString()
+        let s = '';
+        for (let i = t.length-1; i === 0; i--) {
+            if(t[i] === ":"){
+                s = t.substring(0, i);
+                break;
+            }
+        }
+        console.log(s)
+        if(s.length < 5){
+            s = '0' + t.substring(0, 4);
+            console.log(s);
+        }
+        return s;
     }
 
 
@@ -154,22 +189,26 @@ export default function ReportView() {
             "witnessTelephone": witnessNumbers,
             "departmentsInvolved": report.values.departmentsInvolved,
             "description": report.values.description,
-            "action": report.values.actions,
+            "actions": report.values.actions,
             "patientName": report.values.patientName,
             "patientPhone": report.values.patientPhone,
             "patientSSN": report.values.patientSSN,
-            "patientAddress": report.values.patientAddress,
+            "patientAddress": report.values.patientAddress
         }).then((response) => {
             console.log(response)
-
+            setStatus(response.status)
        } ).catch((error) => {
            console.log(error)
        })
 
     }
 
+
+
     return (
-        <Box className="App">
+        <Grid display={"flex"} justifyContent={"center"}>
+        <Box className="App" sx={{ width: '80%' }} >
+            {notify()}
             <form onSubmit={report.onSubmit(handleSubmit)}>
             <h2>Incident Report Form</h2>
             <Stack>
@@ -390,6 +429,7 @@ export default function ReportView() {
             </Stack>
             </form>
         </Box>
+        </Grid>
     );
 }
 // const useStyles = createStyles((theme) => ({
