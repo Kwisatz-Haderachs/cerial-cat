@@ -79,17 +79,17 @@ export default function ReportView() {
         {value: 'Other', label: 'Other'}
     ];
 
-    const individualsInvolved = [
+    const [individualsInvolved, setindividualsInvolved] = useState( [
         {value: 'Patient', label: 'Patient'},
         {value: 'Family Member - Adult', label: 'Family Member - Adult'},
         {value: 'Family Member - Child', label: 'Family Member - Child'},
         {value: 'Staff Member', label: 'Staff Member'},
         {value: 'Visitor', label: 'Visitor'},
-        {value: 'Volunteer', label: 'Volunteer'},
-        {value: 'Other', label: 'Other'}
-    ];
+        {value: 'Volunteer', label: 'Volunteer'}
 
-    const eventsType = [
+    ]);
+
+    const [eventsType, setEventsType] = useState( [
         {value: 'Adverse Drug Reaction', label: 'Adverse Drug Reaction'},
         {value: 'AMA/ Left without being seen', label: 'AMA/ Left without being seen'},
         {value: 'Assault', label: 'Assault'},
@@ -111,9 +111,9 @@ export default function ReportView() {
         {value: 'Radiology Related', label: 'Radiology Related'},
         {value: 'Rape', label: 'Rape'},
         {value: 'Restrained Patient Injury', label: 'Restrained Patient Injury'},
-        {value: 'Suicide in a 24 Hour Facility', label: 'Suicide in a 24 Hour Facility'},
-        {value: 'Other', label: 'Other'}
-    ];
+        {value: 'Suicide in a 24 Hour Facility', label: 'Suicide in a 24 Hour Facility'}
+
+    ]);
 
 
     const report = useForm({
@@ -305,9 +305,17 @@ export default function ReportView() {
                     <MultiSelect
                         withAsterisk
                         required
-                        data={individualsInvolved}
-                        placeholder="Individuals"
                         label="Individuals Involved"
+                        data={individualsInvolved}
+                        placeholder="Select items Or Type In Custom Individual"
+                        searchable
+                        creatable
+                        getCreateLabel={(query) => `+ Create ${query}`}
+                        onCreate={(query) => {
+                            const item = { value: query, label: query };
+                            setindividualsInvolved((current) => [...current, item]);
+                            return item;
+                        }}
                         {...report.getInputProps('individuals')}
                     />
                 </Box>
@@ -315,9 +323,17 @@ export default function ReportView() {
                     <MultiSelect
                         withAsterisk
                         required
-                        data={eventsType}
-                        placeholder="Select Type of Event"
                         label="Type of Event"
+                        data={eventsType}
+                        placeholder="Select Type of Event Or Type Custom Input"
+                        searchable
+                        creatable
+                        getCreateLabel={(query) => `+ Create ${query}`}
+                        onCreate={(query) => {
+                            const item = { value: query, label: query };
+                            setEventsType((current) => [...current, item]);
+                            return item;
+                        }}
                         {...report.getInputProps('typeOfEvent')}
                     />
                 </Box>
