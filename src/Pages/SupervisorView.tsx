@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Grid } from "@mui/material";
+import {Box, Grid, Modal, Typography} from "@mui/material";
 import axios from "axios";
 import ListReport from "../Components/ListReport";
 import SupViewReport from "../Components/SupViewReport";
+import Button from "@mui/material/Button";
 
 export default function SupervisorView() {
     const [reportList, setReportList] = useState([]);
     const [itemView, setItemView] = useState(null)
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
         getData().then(r => {console.log(r)});
@@ -34,10 +38,24 @@ export default function SupervisorView() {
     return(
         <Grid display={"flex"}  justifyContent={"center"}>
         <Box sx={{ width: '80%' }} >
-                {itemView === null ?
-                    <ListReport deleteItem={deleteItem} reportList={reportList} setItemView = {setItemView}/> :
-                    <SupViewReport itemView = {itemView} setItemView = {setItemView} />
-                }
+            <div>
+                    <ListReport deleteItem={deleteItem} reportList={reportList} setItemView = {setItemView} handleOpen={handleOpen}/>
+
+                    <Modal
+                    open={open}
+                    onClose={handleClose}
+                    sx={{height: '90%',overflow:'scroll',margin:'auto'}}
+                    >
+                    <div style={{
+                        border: '1px white solid',
+                        height: 'auto',
+                        margin: 'auto',
+                        width: '50%'
+                    }}>
+                        <SupViewReport handleClose={handleClose} itemView = {itemView} setItemView = {setItemView} />
+                    </div>
+                    </Modal>
+                    </div>
 
         </Box>
         </Grid>

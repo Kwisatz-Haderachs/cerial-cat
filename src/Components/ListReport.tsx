@@ -19,7 +19,7 @@ export default function ListReport (props: any) {
             <td>{element.individualsInvolved.map((data: string) => (data+", "))}</td>
             <td>{element.eventCategory.map((data: string) => (data+", "))}</td>
             <td><DeleteForeverIcon onClick={() => {props.deleteItem(element.id)}} /></td>
-            <td><Button variant={"subtle"} onClick={() => {props.setItemView(element)}}> View </Button></td>
+            <td><Button variant={"subtle"} onClick={() => {props.setItemView(element);props.handleOpen()}}> View </Button></td>
         </tr>
     ));
 
