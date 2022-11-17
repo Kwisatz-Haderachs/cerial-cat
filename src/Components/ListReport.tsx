@@ -1,14 +1,11 @@
 import {Table, Button, Alert} from "@mantine/core";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import axios from "axios";
-
-
 
 
 export default function ListReport (props: any) {
-
-
-
+    // Convert to MUI datagrid - https://mui.com/x/react-data-grid/
+    // Notification for successful delete
+    // Send to Command
 
     const rows = props.reportList.map((element:any) => (
         <tr key={element.id}>
@@ -41,3 +38,18 @@ export default function ListReport (props: any) {
         </Table>
 
 )}
+/*
+return (
+    <Box sx={{ height: 400, width: '100%' }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        disableSelectionOnClick
+        experimentalFeatures={{ newEditingApi: true }}
+      />
+    </Box>
+  );
+ */
