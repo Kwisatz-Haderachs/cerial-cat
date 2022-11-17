@@ -1,4 +1,7 @@
 import {Table, Button } from "@mantine/core";
+import IconButton from "@mui/material/IconButton";
+
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';;
 
 
 
@@ -12,6 +15,7 @@ export default function ListReport (props: any) {
             <td>{element.harm ?  "Harm" : "Potential Harm"}</td>
             <td>{element.individualsInvolved.map((data: string) => (data+", "))}</td>
             <td>{element.eventCategory.map((data: string) => (data+", "))}</td>
+            <td><DeleteForeverIcon /></td>
             <td><Button variant={"subtle"} onClick={() => {props.setItemView(element)}}> View </Button></td>
         </tr>
     ));
@@ -26,6 +30,7 @@ export default function ListReport (props: any) {
                     <th>Harm</th>
                     <th>Individuals(s)</th>
                     <th>Event Type</th>
+                    <th>Delete</th>
                     <th>Deeeets</th>
                 </tr>
                 </thead>
