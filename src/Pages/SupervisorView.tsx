@@ -3,9 +3,9 @@ import {Box, Grid, Modal, Typography} from "@mui/material";
 import axios from "axios";
 import ListReport from "../Components/ListReport";
 import SupViewReport from "../Components/SupViewReport";
-import Button from "@mui/material/Button";
 
-export default function SupervisorView() {
+export default function SupervisorView(props: any) {
+    const [baseURL, setBaseURL] = useState(props.baseURL)
     const [reportList, setReportList] = useState([]);
     const [itemView, setItemView] = useState(null)
     const [open, setOpen] = React.useState(false);
@@ -17,7 +17,7 @@ export default function SupervisorView() {
     },[])
 
     const getData = async () => {
-        const response = await axios.get("http://localhost:8080/Report")
+        const response = await axios.get(`${baseURL}`)
             .then((response) => {
                 console.log(response)
                 setReportList(response.data)}).catch((error) => {console.log(error)})
@@ -26,7 +26,7 @@ export default function SupervisorView() {
     }
 
     const deleteItem = async (props: number) => {
-        await axios.delete(`http://localhost:8080/Report/${props}`)
+        await axios.delete(`${baseURL}/${props}`)
             .then((response)=> {console.log(response)})
             .catch((error) => {console.log(error)});
         getData();
