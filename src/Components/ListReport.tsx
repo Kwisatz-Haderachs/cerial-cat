@@ -1,8 +1,14 @@
-import {Table, Button } from "@mantine/core";
+import {Table, Button, Alert} from "@mantine/core";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import axios from "axios";
+
 
 
 
 export default function ListReport (props: any) {
+
+
+
 
     const rows = props.reportList.map((element:any) => (
         <tr key={element.id}>
@@ -12,6 +18,7 @@ export default function ListReport (props: any) {
             <td>{element.harm ?  "Harm" : "Potential Harm"}</td>
             <td>{element.individualsInvolved.map((data: string) => (data+", "))}</td>
             <td>{element.eventCategory.map((data: string) => (data+", "))}</td>
+            <td><DeleteForeverIcon onClick={() => {props.deleteItem(element.id)}} /></td>
             <td><Button variant={"subtle"} onClick={() => {props.setItemView(element)}}> View </Button></td>
         </tr>
     ));
@@ -26,6 +33,7 @@ export default function ListReport (props: any) {
                     <th>Harm</th>
                     <th>Individuals(s)</th>
                     <th>Event Type</th>
+                    <th>Delete</th>
                     <th>Deeeets</th>
                 </tr>
                 </thead>
