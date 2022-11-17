@@ -264,8 +264,8 @@ export default function SupViewReport(props: any) {
                 searchable
                 placeholder="Pick Command"
                 {...props} />
-                        <Button style={{backgroundColor: "Green"}} onClick = {()=> {props.handleClose()}} >Cancel</Button>
-                        <Button onClick = {()=> {
+                        <Button style={{backgroundColor: "#2C2E33", color:"yellow",  margin: 10}} onClick = {()=> {props.handleClose()}} >Cancel</Button>
+                        <Button style={{backgroundColor: "#2C2E33", color:"yellow", margin: 10}} onClick = {()=> {
                             props.handleClose();
                             alert("Successfully submitted")}}>
                             Send to Command

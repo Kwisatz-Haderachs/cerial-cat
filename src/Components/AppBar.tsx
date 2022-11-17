@@ -26,7 +26,7 @@ export default function ButtonAppBar() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
 
-                <Toolbar sx={{backgroundColor: 'grey' , justifyContent: 'center'}}>
+                <Toolbar sx={{backgroundColor: '#2C2E33' , justifyContent: 'center'}}>
 
                         <Link style={{margin:'10px', textDecoration:"initial", color:"inherit"}} to={"/report"}>
                             <Button sx={{color: '#FAED26'}} color="gray"> Make New Report </Button>
