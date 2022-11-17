@@ -6,8 +6,9 @@ import {Grid, Stack, Box, Alert, AlertTitle} from "@mui/material";
 import axios from "axios";
 
 
-export default function ReportView() {
+export default function ReportView(props: any) {
     const [status, setStatus] = useState(0);
+    const [baseURL, setBaseURL] = useState(props.baseURL)
 
     const  INIT_VALUE = {
         dateOfEvent: "",
