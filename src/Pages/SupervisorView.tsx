@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Grid, Modal, Typography} from "@mui/material";
+import {Box, Grid, Modal} from "@mui/material";
 import axios from "axios";
 import ListReport from "../Components/ListReport";
 import SupViewReport from "../Components/SupViewReport";
@@ -37,7 +37,7 @@ export default function SupervisorView(props: any) {
 
     return(
         <Grid display={"flex"}  justifyContent={"center"}>
-        <Box sx={{ width: '80%' }} >
+        <Box className={"report"} sx={{ width: '80%', marginTop: 10, backgroundColor:"#A6A7AB", border: 1 }} >
             <div>
                     <ListReport deleteItem={deleteItem} reportList={reportList} setItemView = {setItemView} handleOpen={handleOpen}/>
 

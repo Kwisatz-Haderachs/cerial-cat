@@ -14,7 +14,9 @@ function App() {
     return (
 
         <Box>
+
             <ButtonAppBar/>
+
             <Routes>
                 <Route path={"/report"} element={ <ReportView baseURL={baseURL} /> }/>
                 <Route path={"/view"} element={ <SupervisorView baseURL={baseURL}/> }/>

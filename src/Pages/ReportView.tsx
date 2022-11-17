@@ -253,6 +253,7 @@ export default function ReportView(props: any) {
                                 withAsterisk
                                 required
                                 defaultValue={new Date()}
+
                                 {...report.getInputProps(('dateOfEvent'))}
                              />
                         </Grid>
@@ -262,6 +263,7 @@ export default function ReportView(props: any) {
                                 required
                                 label={"Time of Event"}
                                 defaultValue={"00:00"}
+
                                 {...report.getInputProps(('timeOfEvent'))}
                             />
                         </Grid>
@@ -473,7 +475,7 @@ export default function ReportView(props: any) {
                     </TextInput>
                 </Box>
                 <Box>
-                    <Button style={{backgroundColor: "Green"}} type={"submit"} >Submit</Button>
+                    <Button style={{backgroundColor: "#2C2E33", color:"yellow", marginTop: 20}} type={"submit"} >Submit</Button>
                 </Box>
             </Stack>
             </form>
