@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Box, Grid, Stack} from "@mui/material";
-import {Button, MultiSelect, Select, Textarea} from "@mantine/core";
+import {Box, Container, Grid, Stack} from "@mui/material";
+import {Button, MultiSelect, Select, Textarea, Text} from "@mantine/core";
 import axios from "axios";
 
 
@@ -8,43 +8,49 @@ import axios from "axios";
 export default function SupViewReport(props: any) {
     const [report, setReport] = useState(props.itemView)
 
+    const Commands=[
+        {label: 'SWF',value:'SWF'},
+        {label: 'AFC',value:'AFC'},
+        {label:'HQDA',value:'HQDA'}
+    ]
 
-    async function handleClick () {
-        console.log('This has been sent to Nik')
 
-        let witnessNames = [report.witness1, report.witness2, report.witness3 ]
-        let witnessNumbers = [report.witnessNumbers1, report.witnessNumbers2, report.witnessNumbers3]
+    // async function handleClick () {
+    //     console.log('This has been sent to Nik')
+        //
+        // let witnessNames = [report.witness1, report.witness2, report.witness3 ]
+        // let witnessNumbers = [report.witnessNumbers1, report.witnessNumbers2, report.witnessNumbers3]
 
-        await axios.post("http://localhost:8080/Report", {
-            "dateTime": report.dateTime,
-            "location": report.locationOfEvent,
-            "eventType": report.eventType,
-            "harm": report.harm,
-            "individualsInvolved": report.individuals,
-            "eventCategory": report.typeOfEvent,
-            "incidentEffect": report.effectOfIncident,
-            "witnessName": witnessNames,
-            "witnessTelephone": witnessNumbers,
-            "departmentsInvolved": report.departmentsInvolved,
-            "description": report.description,
-            "action": report.actions,
-            "patientName": report.patientName,
-            "patientPhone": report.patientPhone,
-            "patientSSN": report.patientSSN,
-            "patientAddress": report.patientAddress
-        }).then((response) => {
-            console.log(response)
-
-        } ).catch((error) => {
-            console.log(error)
-        })
-        props.setItemView(null);
-    }
+    //     await axios.post("http://localhost:8080/Report", {
+    //         "dateTime": report.dateTime,
+    //         "location": report.locationOfEvent,
+    //         "eventType": report.eventType,
+    //         "harm": report.harm,
+    //         "individualsInvolved": report.individuals,
+    //         "eventCategory": report.typeOfEvent,
+    //         "incidentEffect": report.effectOfIncident,
+    //         "witnessName": witnessNames,
+    //         "witnessTelephone": witnessNumbers,
+    //         "departmentsInvolved": report.departmentsInvolved,
+    //         "description": report.description,
+    //         "action": report.actions,
+    //         "patientName": report.patientName,
+    //         "patientPhone": report.patientPhone,
+    //         "patientSSN": report.patientSSN,
+    //         "patientAddress": report.patientAddress
+    //     }).then((response) => {
+    //         console.log(response)
+    //
+    //     } ).catch((error) => {
+    //         console.log(error)
+    //     })
+    // //     props.setItemView(null);
+    // }
 
 
     return (
-        <Grid display={"flex"}  justifyContent={"center"}>
-        <Box className="App" sx={{ width: '80%' }}>
+        <Grid display={"flex"}  justifyContent={"center"} bgcolor={'whitesmoke'} >
+        <div className="App" >
                 <h2>Incident Report Form</h2>
                 <Stack>
                     <Grid container spacing={2}>
@@ -248,12 +254,25 @@ export default function SupViewReport(props: any) {
                             value = {report.patientAddress}
                         />
                     </Box>
+
+
                     <Box>
-                        <Button style={{backgroundColor: "Green"}} onClick = {()=> {props.setItemView(null)}} >Cancel</Button>
-                        <Button onClick = {()=> {handleClick()}}> Send to Command</Button>
+                    <Text size="sm">Please select a command.</Text>
+            <MultiSelect
+                data={Commands}
+                limit={20}
+                searchable
+                placeholder="Pick Command"
+                {...props} />
+                        <Button style={{backgroundColor: "Green"}} onClick = {()=> {props.handleClose()}} >Cancel</Button>
+                        <Button onClick = {()=> {
+                            props.handleClose();
+                            alert("Successfully submitted")}}>
+                            Send to Command
+                        </Button>
                     </Box>
                 </Stack>
-            </Box>
+            </div>
         </Grid>
         )
 }
