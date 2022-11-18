@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {TextInput, Select, MultiSelect, Button} from '@mantine/core';
-import { DatePicker, TimeInput } from '@mantine/dates';
+import { DatePicker } from '@mantine/dates';
 import { useForm} from '@mantine/form';
 import {Grid, Stack, Box, Alert, AlertTitle} from "@mui/material";
 import axios from "axios";
@@ -12,7 +12,7 @@ export default function ReportView(props: any) {
 
     const  INIT_VALUE = {
         dateOfEvent: "",
-        //timeOfEvent: convertTime(""),
+        timeOfEvent: "",
         locationOfEvent: "",
         eventType: false,
         harm: false,
@@ -42,22 +42,33 @@ export default function ReportView(props: any) {
         setTimeout(()=>{
             notify()
             setStatus(0)
-        }, 5000)
+        }, 4000)
     },[status])
 
     function notify(){
+        let cat : string = `https://http.cat/${status}.jpg`;
+
         if(status === 200){
             return(
                 <Alert variant="filled" severity="success" >
                     <AlertTitle>Success</AlertTitle>
+                    <img src={cat} alt={""}  />
                 </Alert>
             )
         } else if( status >= 400){
             return (
                 <Alert variant="filled" severity="error">
                     <AlertTitle>Error</AlertTitle>
+                    <img src={cat} alt={""}  />
                 </Alert>
             )
+        }
+        else if (status > 0) {
+            return (
+            <Alert variant="filled" severity="info">
+                <AlertTitle>Error</AlertTitle>
+                <img src={cat} alt={""}/>
+            </Alert>)
         }
     }
 
@@ -208,13 +219,12 @@ export default function ReportView(props: any) {
         }).then((response) => {
             console.log(response)
             setStatus(response.status)
+            report.reset();
             report.setValues(INIT_VALUE)
-            
-    
        } ).catch((error) => {
            console.log(error)
-           
-       })
+           setStatus(error.response.status)
+        })
 
 
     }
@@ -231,22 +241,22 @@ export default function ReportView(props: any) {
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <DatePicker
+                                clearable
                                 label={"Date of Event"}
                                 inputFormat={"YYYY-MM-DD"}
                                 withAsterisk
                                 required
-                                defaultValue={new Date()}
-
+                                // defaultValue={null}
+                                // cannot set value to null due to being assigned string in form, clearable doesn't work
                                 {...report.getInputProps(('dateOfEvent'))}
                              />
                         </Grid>
                         <Grid item xs={6}>
                             <TextInput
+                                label={"Time of Event"}
                                 withAsterisk
                                 required
-                                label={"Time of Event"}
                                 defaultValue={"00:00"}
-
                                 {...report.getInputProps(('timeOfEvent'))}
                             />
                         </Grid>
@@ -256,7 +266,7 @@ export default function ReportView(props: any) {
                     withAsterisk
                     required
                     label='Location of event'
-                    onChange={(event ) => report.setFieldValue('locationOfEvent', event.target.value)}
+                    {...report.getInputProps('locationOfEvent')}
                     //classNames={{ input: classes.invalid }}
                 >
                 </TextInput>

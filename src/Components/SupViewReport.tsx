@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Box, Container, Grid, Stack} from "@mui/material";
 import {Button, MultiSelect, Select, Textarea, Text} from "@mantine/core";
-import axios from "axios";
-
-
 
 export default function SupViewReport(props: any) {
     const [report, setReport] = useState(props.itemView)
@@ -86,7 +83,7 @@ export default function SupViewReport(props: any) {
                             required
                             placeholder="Select Type of Event"
                             label="Type of Event"
-                            value={report.eventCategory}
+                            value={report.eventCategory.map((element: string) => {return " " + element})}
                         />
                     </Box>
                     <Box>
