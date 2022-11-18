@@ -47,7 +47,6 @@ export default function SupViewReport(props: any) {
     // //     props.setItemView(null);
     // }
 
-
     return (
         <Grid display={"flex"}  justifyContent={"center"} bgcolor={'whitesmoke'} >
         <div className="App" >
@@ -108,7 +107,7 @@ export default function SupViewReport(props: any) {
                             readOnly={true}
                             withAsterisk
                             required
-                            value={report.individualsInvolved}
+                            value={report.individualsInvolved.map((element: string) => {return element + ", "})}
                             placeholder="Individuals"
                             label="Individuals Involved"
                         />
@@ -187,7 +186,7 @@ export default function SupViewReport(props: any) {
                             required
                             placeholder="Select Departments"
                             label="Departments Involved"
-                            value = {report.departmentsInvolved}
+                            value = {report.departmentsInvolved.map((element: string) => {return element + ", "})}
                         />
                     </Box>
                     <Box>
