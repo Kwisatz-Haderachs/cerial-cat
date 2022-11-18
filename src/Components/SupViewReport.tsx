@@ -14,40 +14,6 @@ export default function SupViewReport(props: any) {
         {label:'HQDA',value:'HQDA'}
     ]
 
-
-    // async function handleClick () {
-    //     console.log('This has been sent to Nik')
-        //
-        // let witnessNames = [report.witness1, report.witness2, report.witness3 ]
-        // let witnessNumbers = [report.witnessNumbers1, report.witnessNumbers2, report.witnessNumbers3]
-
-    //     await axios.post("http://localhost:8080/Report", {
-    //         "dateTime": report.dateTime,
-    //         "location": report.locationOfEvent,
-    //         "eventType": report.eventType,
-    //         "harm": report.harm,
-    //         "individualsInvolved": report.individuals,
-    //         "eventCategory": report.typeOfEvent,
-    //         "incidentEffect": report.effectOfIncident,
-    //         "witnessName": witnessNames,
-    //         "witnessTelephone": witnessNumbers,
-    //         "departmentsInvolved": report.departmentsInvolved,
-    //         "description": report.description,
-    //         "action": report.actions,
-    //         "patientName": report.patientName,
-    //         "patientPhone": report.patientPhone,
-    //         "patientSSN": report.patientSSN,
-    //         "patientAddress": report.patientAddress
-    //     }).then((response) => {
-    //         console.log(response)
-    //
-    //     } ).catch((error) => {
-    //         console.log(error)
-    //     })
-    // //     props.setItemView(null);
-    // }
-
-
     return (
         <Grid display={"flex"}  justifyContent={"center"} bgcolor={'whitesmoke'} >
         <div className="App" >
@@ -108,7 +74,7 @@ export default function SupViewReport(props: any) {
                             readOnly={true}
                             withAsterisk
                             required
-                            value={report.individualsInvolved}
+                            value={report.individualsInvolved.map((element: string) => {return " " + element})}
                             placeholder="Individuals"
                             label="Individuals Involved"
                         />
@@ -187,7 +153,7 @@ export default function SupViewReport(props: any) {
                             required
                             placeholder="Select Departments"
                             label="Departments Involved"
-                            value = {report.departmentsInvolved}
+                            value = {report.departmentsInvolved.map((element: string) => {return " " + element})}
                         />
                     </Box>
                     <Box>

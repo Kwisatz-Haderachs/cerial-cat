@@ -168,24 +168,7 @@ export default function ReportView(props: any) {
     function convertDate(inputFormat: string) {
         function pad(s: number) { return (s < 10) ? '0' + s : s; }
         let d = new Date(inputFormat)
-        return [pad(d.getFullYear()), pad(d.getMonth()+1), pad(d.getDate()+1)].join('-')
-    }
-
-    function convertTime(inputFormat: string) {
-        let t = new Date(inputFormat).toLocaleTimeString()
-        let s = '';
-        for (let i = t.length-1; i === 0; i--) {
-            if(t[i] === ":"){
-                s = t.substring(0, i);
-                break;
-            }
-        }
-      //  console.log(s)
-        if(s.length < 5){
-            s = '0' + t.substring(0, 4);
-     //       console.log(s);
-        }
-        return s;
+        return [pad(d.getFullYear()), pad(d.getMonth()+1), pad(d.getDate())].join('-')
     }
 
 
