@@ -5,6 +5,8 @@ import ListReport from "../Components/ListReport";
 import SupViewReport from "../Components/SupViewReport";
 
 export default function SupervisorView(props: any) {
+    const [baseURLBack, setBaseURLBack] = useState(props.baseURLBack)
+    const [baseURLFront, setBaseURLFront] = useState(props.baseURLFront)
     const [baseURL, setBaseURL] = useState(props.baseURL)
     const [reportList, setReportList] = useState([]);
     const [itemView, setItemView] = useState(null)
@@ -18,7 +20,7 @@ export default function SupervisorView(props: any) {
     },[])
 
     const getData = async () => {
-        await axios.get(`${baseURL}`)
+        await axios.get(`${baseURLBack}`)
             .then((response) => {
                 console.log(response)
                 setStatus(response.status)
@@ -32,7 +34,7 @@ export default function SupervisorView(props: any) {
     }
 
     const deleteItem = async (props: number) => {
-        await axios.delete(`${baseURL}/${props}`)
+        await axios.delete(`${baseURLBack}/${props}`)
             .then((response)=> {
                 console.log(response)
                 setStatus(response.status)

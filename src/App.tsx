@@ -9,7 +9,8 @@ import LandingPage from "./Pages/LandingPage";
 
 
 function App() {
-    const [baseURL, setBaseURL] = useState("http://localhost:8080/Report")
+    const [baseURLBack, setBaseURLBack] = useState("http://localhost:8080/Report")
+    const [baseURLFront, setBaseURLFront] = useState("http://localhost:3000")
 
     return (
 
@@ -18,9 +19,9 @@ function App() {
             <ButtonAppBar/>
 
             <Routes>
-                <Route path={"/report"} element={ <ReportView baseURL={baseURL} /> }/>
-                <Route path={"/view"} element={ <SupervisorView baseURL={baseURL}/> }/>
-                <Route path={'/'} element={ <LandingPage baseURL={baseURL}/> }/>
+                <Route path={"/report"} element={ <ReportView baseURLFront={baseURLFront} baseURLBack={baseURLBack}   /> }/>
+                <Route path={"/view"} element={ <SupervisorView baseURLFront={baseURLFront} baseURLBack={baseURLBack} /> }/>
+                <Route path={'/'} element={ <LandingPage baseURLFront={baseURLFront} baseURLBack ={baseURLBack}  /> }/>
             </Routes>
 
         </Box>
