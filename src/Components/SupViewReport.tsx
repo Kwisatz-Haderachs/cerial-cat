@@ -26,7 +26,7 @@ export default function SupViewReport(props: any) {
                                 label={"Date of Event"}
                                 withAsterisk
                                 required
-                                defaultValue={report.dateTime}
+                                defaultValue={report.dateTime.split(" ")[0]}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -35,7 +35,7 @@ export default function SupViewReport(props: any) {
                                 required
                                 withAsterisk
                                 label={"Time of Event"}
-                                defaultValue={report.dateTime}
+                                defaultValue={report.dateTime.split(" ")[1]}
                             />
                         </Grid>
                     </Grid>
