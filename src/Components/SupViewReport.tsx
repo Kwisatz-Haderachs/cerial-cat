@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Box, Container, Grid, Stack} from "@mui/material";
-import {Button, MultiSelect, Select, Textarea, Text} from "@mantine/core";
+import React, {useState} from "react";
+import {Button, MultiSelect, Select, Textarea, Text, Box, Grid, Stack} from "@mantine/core";
 
 export default function SupViewReport(props: any) {
     const [report, setReport] = useState(props.itemView)
@@ -12,12 +11,17 @@ export default function SupViewReport(props: any) {
     ]
 
     return (
-        <Grid display={"flex"}  justifyContent={"center"} bgcolor={'whitesmoke'} >
-        <div className="App" >
-                <h2>Incident Report Form</h2>
+        <Box  sx={(theme) => ({
+                backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+                textAlign: 'center',
+                padding: theme.spacing.xl,
+                borderRadius: theme.radius.md,
+                cursor: 'pointer'
+            })}>
+            <Grid grow >
                 <Stack>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                    <Grid>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 label={"Date of Event"}
@@ -25,8 +29,8 @@ export default function SupViewReport(props: any) {
                                 required
                                 defaultValue={report.dateTime.split(" ")[0]}
                             />
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Grid.Col>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 required
@@ -34,7 +38,7 @@ export default function SupViewReport(props: any) {
                                 label={"Time of Event"}
                                 defaultValue={report.dateTime.split(" ")[1]}
                             />
-                        </Grid>
+                        </Grid.Col>
                     </Grid>
                     <Box>
                         <Textarea
@@ -46,8 +50,8 @@ export default function SupViewReport(props: any) {
                             //classNames={{ input: classes.invalid }}
                         />
                     </Box>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                    <Grid>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 withAsterisk
@@ -55,8 +59,8 @@ export default function SupViewReport(props: any) {
                                 label="Incident Type"
                                 value = {report.incidentEffect ? "Actual Event/Incident" : "Near Miss/CloseCall"}
                             />
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Grid.Col>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 withAsterisk
@@ -64,7 +68,7 @@ export default function SupViewReport(props: any) {
                                 label="Harm"
                                 value = {report.harm ? "Harm" : "Potential Harm"}
                             />
-                        </Grid>
+                        </Grid.Col>
                     </Grid>
                     <Box>
                         <Textarea
@@ -95,8 +99,8 @@ export default function SupViewReport(props: any) {
                             value = {report.incidentEffect ? "Harm sustained" : "Potential Harm"}
                         />
                     </Box>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                    <Grid>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 withAsterisk
@@ -104,8 +108,8 @@ export default function SupViewReport(props: any) {
                                 label='Witness'
                                 value ={report.witnessName[0]}
                             />
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Grid.Col>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 withAsterisk
@@ -113,35 +117,35 @@ export default function SupViewReport(props: any) {
                                 label='Witness Number'
                                 value ={report.witnessTelephone[0]}
                             />
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Grid.Col>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 label='Witness'
                                 value ={report.witnessName[1]}
                             />
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Grid.Col>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 label='Witness Number'
                                 value ={report.witnessTelephone[1]}
                             />
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Grid.Col>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 label='Witness'
                                 value ={report.witnessName[2]}
                             />
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Grid.Col>
+                        <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
                                 label='Witness Number'
                                 value ={report.witnessTelephone[2]}
                             />
-                        </Grid>
+                        </Grid.Col>
                     </Grid>
                     <Box>
                         <Textarea
@@ -185,8 +189,8 @@ export default function SupViewReport(props: any) {
                     </Box>
 
                     <Box>
-                        <Grid container spacing={2}>
-                            <Grid item xs={6}>
+                        <Grid>
+                            <Grid.Col span={6}>
                                 <Textarea
                                     readOnly={true}
                                     withAsterisk
@@ -195,8 +199,8 @@ export default function SupViewReport(props: any) {
                                     value = {report.patientPhone}
                                     //classNames={{ input: classes.invalid }}
                                 />
-                            </Grid>
-                            <Grid item xs={6}>
+                            </Grid.Col>
+                            <Grid.Col span={6}>
                                 <Textarea
                                     readOnly={true}
                                     withAsterisk
@@ -205,7 +209,7 @@ export default function SupViewReport(props: any) {
                                     value = {report.patientSSN}
                                     //classNames={{ input: classes.invalid }}
                                 />
-                            </Grid>
+                            </Grid.Col>
                         </Grid>
                     </Box>
                     <Box>
@@ -235,7 +239,7 @@ export default function SupViewReport(props: any) {
                         </Button>
                     </Box>
                 </Stack>
-            </div>
-        </Grid>
+            </Grid>
+        </Box>
         )
 }

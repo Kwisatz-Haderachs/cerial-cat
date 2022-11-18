@@ -235,9 +235,7 @@ export default function ReportView(props: any) {
                         '#acaebf',
                         '#8c8fa3',
                         '#666980',
-                        '#4d4f66',
-                        '#34354a',
-                        '#2b2c3d',
+                        '#1b1b26',
                         '#1d1e30',
                         '#0c0d21',
                         '#01010a',
@@ -481,7 +479,7 @@ export default function ReportView(props: any) {
                     </TextInput>
                 </Box>
                 <Box>
-                    <Button style={{backgroundColor: "#2C2E33", color:"yellow", marginTop: 20}} type={"submit"} >Submit</Button>
+                    <Button variant="default" color="white" type={"submit"} >Submit</Button>
                 </Box>
             </Stack>
             </form>

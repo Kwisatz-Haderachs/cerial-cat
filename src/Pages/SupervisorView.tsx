@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, AlertTitle, Box, Grid, Modal} from "@mui/material";
+import {Alert, AlertTitle, Box, Grid, Modal, CssBaseline, ThemeProvider, createTheme} from "@mui/material";
 import axios from "axios";
 import ListReport from "../Components/ListReport";
 import SupViewReport from "../Components/SupViewReport";
@@ -48,14 +48,6 @@ export default function SupervisorView(props: any) {
 
     function notify(){
         let cat : string = `https://http.cat/${status}.jpg`;
-
-        // if(status === 200){
-        //     return(
-        //         <Alert variant="filled" severity="success" >
-        //             <AlertTitle>Success</AlertTitle>
-        //             <img src={cat} alt={""}  />
-        //         </Alert>
-        //     )
        if(!(status ===200)){
             return (
                 <Alert variant="filled" severity="error">
@@ -67,33 +59,43 @@ export default function SupervisorView(props: any) {
 
     }
 
-    return(
-        <Grid container spacing ={2}>
-        <Grid display={"flex"}  justifyContent={"center"}  xs = {12}>
-            <Box className={"report"} sx={{ width: '80%', marginTop: 10, backgroundColor:"#A6A7AB", border: 1 }} >
-                <div>
-                    <ListReport deleteItem={deleteItem} reportList={reportList} setItemView = {setItemView} handleOpen={handleOpen}/>
 
-                    <Modal
-                    open={open}
-                    onClose={handleClose}
-                    sx={{height: '90%',overflow:'scroll',margin:'auto'}}
-                    >
-                    <div style={{
-                        border: '1px white solid',
-                        height: 'auto',
-                        margin: 'auto',
-                        width: '50%'
-                    }}>
-                        <SupViewReport handleClose={handleClose} itemView = {itemView} setItemView = {setItemView} />
-                    </div>
-                    </Modal>
-                    </div>
-                </Box>
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark',
+        },
+    });
+
+    return(
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <Grid container spacing ={2}>
+            <Grid display={"flex"}  justifyContent={"center"}  xs = {12}>
+                <Box className={"report"} sx={{ width: '80%', marginTop: 10, backgroundColor:"#A6A7AB", border: 1 }} >
+                    <div>
+                        <ListReport deleteItem={deleteItem} reportList={reportList} setItemView = {setItemView} handleOpen={handleOpen}/>
+
+                        <Modal
+                        open={open}
+                        onClose={handleClose}
+                        sx={{height: '90%',overflow:'scroll',margin:'auto'}}
+                        >
+                        <div style={{
+                            border: '1px white solid',
+                            height: 'auto',
+                            margin: 'auto',
+                            width: '50%'
+                        }}>
+                            <SupViewReport handleClose={handleClose} itemView = {itemView} setItemView = {setItemView} />
+                        </div>
+                        </Modal>
+                        </div>
+                    </Box>
+                </Grid>
+                <Grid xs = {12}>
+                    {notify()}
+                </Grid>
             </Grid>
-            <Grid xs = {12}>
-                {notify()}
-            </Grid>
-        </Grid>
+        </ThemeProvider>
     )
 }
