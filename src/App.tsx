@@ -14,7 +14,7 @@ function App() {
     const [catView, setCatView] = useState(false);
     const [baseURLBack, setBaseURLBack] = useState("http://localhost:8080/Report")
 
-    function switchView () {
+    function switchView() {
         setCatView(!catView)
 
     }
@@ -24,35 +24,31 @@ function App() {
         if (catView) {
             return (
                 <Box>
-                    <CatBar switchView={switchView} />
+                    <CatBar switchView={switchView}/>
                     <Routes>
-                        <Route path={"/report"} element={ <ReportView baseURLBack={baseURLBack}   /> }/>
-                        <Route path={"/view"} element={ <SupervisorView baseURLBack={baseURLBack} /> }/>
-                        <Route path={'/'} element={ <LandingPage /> }/>
+                        <Route path={"/report"} element={<ReportView baseURLBack={baseURLBack}/>}/>
+                        <Route path={"/view"} element={<SupervisorView baseURLBack={baseURLBack}/>}/>
+                        <Route path={'/'} element={<LandingPage/>}/>
                     </Routes>
-                    <img height={'1%'} width={'1%'} alt={'Cat'} onClick={switchView} src={'/switchCat.jpg'}/>
                 </Box>
 
 
             );
-        }
-            else return (
+        } else return (
 
-                    <Box>
-                        <ButtonAppBar switchView={switchView} />
-                        <Routes>
-                            <Route path={"/report"} element={ <ReportView baseURLBack={baseURLBack}   /> }/>
-                            <Route path={"/view"} element={ <SupervisorView baseURLBack={baseURLBack} /> }/>
-                            <Route path={'/'} element={ <LandingPage /> }/>
-                        </Routes>
-                        <img height={'1%'} width={'1%'} alt={'Cat'} onClick={switchView} src={'/switchCat.jpg'}/>
-                    </Box>
+            <Box>
+                <ButtonAppBar switchView={switchView}/>
+                <Routes>
+                    <Route path={"/report"} element={<ReportView baseURLBack={baseURLBack}/>}/>
+                    <Route path={"/view"} element={<SupervisorView baseURLBack={baseURLBack}/>}/>
+                    <Route path={'/'} element={<LandingPage/>}/>
+                </Routes>
+            </Box>
 
 
-                );
+        );
 
-            }
-
+    }
 
 
     return (
