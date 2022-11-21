@@ -9,7 +9,7 @@ import {IconPaw, IconHandStop} from "@tabler/icons";
 
 
 
-export default function CatBar() {
+export default function CatBar(props: any) {
     const audio = new Audio("/catSound.wav");
     audio.oncanplaythrough = function () {
         audio.play();
@@ -20,7 +20,7 @@ export default function CatBar() {
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar sx={{backgroundColor: '#2C2E33', justifyContent: 'center'}}>
-                    <Switch onLabel={<IconPaw/> } offLabel={<IconHandStop />}/>
+                    <Switch checked={true} onLabel={<IconPaw/> } offLabel={<IconHandStop />} onClick={props.switchView}/>
 
                     <Link style={{margin: '10px', textDecoration: "initial", color: "inherit"}} to={"/report"}>
                         <img alt={'Cat'} height='100px' width={'100px'} src={'/catreport.jpg'}/>

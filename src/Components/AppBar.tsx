@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {Link} from "react-router-dom";
 import {AppBar, Box, Toolbar} from '@mui/material';
-import { Button } from '@mantine/core';
+import {Button, Switch} from '@mantine/core';
 
 import { createTheme } from '@mui/material/styles';
+import {IconHandStop, IconPaw} from "@tabler/icons";
 
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props: any) {
 
 
     const theme = createTheme({
@@ -24,7 +25,9 @@ export default function ButtonAppBar() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
 
+
                 <Toolbar sx={{backgroundColor: '#2C2E33' , justifyContent: 'center'}}>
+                <Switch onLabel={<IconPaw/> } offLabel={<IconHandStop />} onClick={props.switchView}/>
 
                         <Link style={{margin:'10px', textDecoration:"initial", color:"inherit"}} to={"/report"}>
                             <Button sx={{color: '#FAED26'}} color="gray"> Make New Report </Button>

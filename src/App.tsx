@@ -24,7 +24,7 @@ function App() {
         if (catView) {
             return (
                 <Box>
-                    <CatBar />
+                    <CatBar switchView={switchView} />
                     <Routes>
                         <Route path={"/report"} element={ <ReportView baseURLBack={baseURLBack}   /> }/>
                         <Route path={"/view"} element={ <SupervisorView baseURLBack={baseURLBack} /> }/>
@@ -39,7 +39,7 @@ function App() {
             else return (
 
                     <Box>
-                        <ButtonAppBar />
+                        <ButtonAppBar switchView={switchView} />
                         <Routes>
                             <Route path={"/report"} element={ <ReportView baseURLBack={baseURLBack}   /> }/>
                             <Route path={"/view"} element={ <SupervisorView baseURLBack={baseURLBack} /> }/>
