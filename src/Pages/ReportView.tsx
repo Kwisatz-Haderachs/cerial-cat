@@ -36,8 +36,6 @@ export default function ReportView(props: any) {
 
     const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
 
-    
-
     useEffect(()=> {
         setTimeout(()=>{
             notify()

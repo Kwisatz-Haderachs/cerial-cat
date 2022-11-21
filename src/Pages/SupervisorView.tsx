@@ -48,7 +48,7 @@ export default function SupervisorView(props: any) {
 
     function notify(){
         let cat : string = `https://http.cat/${status}.jpg`;
-       if(!(status ===200)){
+       if(status >= 300){
             return (
                 <Alert variant="filled" severity="error">
                     <AlertTitle>Error</AlertTitle>
