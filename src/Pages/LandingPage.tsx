@@ -51,7 +51,7 @@ export default function LandingPage() {
                     variant="h1" > Serious Incident Report</Typography>
             </Grid>
             <Grid  item xs={6}>
-                <Card sx={{maxwidth: '50vh',maxHeight: '50vh', minHeight: 500}}>
+                <Card sx={{maxwidth: '50vh',maxHeight: '50vh', minHeight: 400}}>
                     <CardMedia
                         component="img"
                         height="100%"
@@ -61,11 +61,11 @@ export default function LandingPage() {
                 </Card>
             </Grid>
             <Grid item xs={6} >
-                <Card sx={{maxwidth: '50vh', maxHeight: '50vh',  minHeight: 500}}>
+                <Card sx={{maxwidth: '50vh', maxHeight: '50vh',  minHeight: 400}}>
                     <CardMedia
                         component="img"
                         height="100%"
-                        image = "https://warontherocks.com/wp-content/uploads/2018/10/rasmussen2-1024x662.jpg"
+                        image = "https://api.army.mil/e2/c/images/2012/01/20/232645/size0-full.jpg"
                         alt=""
                     />
                 </Card>
