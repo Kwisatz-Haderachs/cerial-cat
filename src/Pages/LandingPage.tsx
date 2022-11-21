@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
 import {Card, CardMedia,Typography, Grid} from "@mui/material";
 
-export default function LandingPage(props: any) {
-    const [baseURL, setBaseURL] = useState(props.baseURL)
+export default function LandingPage() {
 
     let statusCodes = [100, 101, 102, 201, 202, 203, 204, 206, 207, 300, 301, 302, 303, 304, 305,
         307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415,
@@ -22,8 +20,8 @@ export default function LandingPage(props: any) {
     //                    <img  src={`https://http.cat/${randomStatus()}.jpg`} />
     //                 </Box>
     return(
-        <Grid container spacing ={2} sx={{height:"100vh"}}>
-            <Grid xs={6} >
+        <Grid container spacing ={0} sx={{height:"100vh", backgroundColor:"black"}}>
+            <Grid item xs={6} >
                 <Card sx={{maxwidth: '50vh'}} >
                     <CardMedia
                         component= "img"
@@ -33,7 +31,7 @@ export default function LandingPage(props: any) {
                     />
                 </Card>
             </Grid>
-            <Grid xs={6} >
+            <Grid item xs={6} >
                 <Card sx={{maxwidth: '50vh'}}>
                     <CardMedia
                         component= "img"
@@ -43,25 +41,27 @@ export default function LandingPage(props: any) {
                     />
                 </Card>
             </Grid>
-            <Grid xs={12} justifyContent={"center"} alignItems={"center"} display={"flex"}>
+            <Grid  item xs={12} justifyContent={"center"} alignItems={"center"} display={"flex"}>
                 <Typography
                     fontFamily={"Roboto"}
                     //fontWeight={"Bold"}
                     fontStyle={"Underline"}
+                    padding={5}
+                    color={"yellow"}
                     variant="h1" > Serious Incident Report</Typography>
             </Grid>
-            <Grid xs={6} >
-                <Card sx={{maxwidth: '50vh'}}>
+            <Grid  item xs={6}>
+                <Card sx={{maxwidth: '50vh',maxHeight: '50vh', minHeight: 500}}>
                     <CardMedia
                         component="img"
                         height="100%"
-                        src = "/img/bradley.png"
-                        alt=""
+                        image = "https://images.wsj.net/im-577679?width=1920&height=1080"
+                        alt= ""
                     />
                 </Card>
             </Grid>
-            <Grid xs={6} >
-                <Card sx={{maxwidth: '50vh'}}>
+            <Grid item xs={6} >
+                <Card sx={{maxwidth: '50vh', maxHeight: '50vh',  minHeight: 500}}>
                     <CardMedia
                         component="img"
                         height="100%"

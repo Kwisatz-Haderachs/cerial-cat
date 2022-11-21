@@ -40,3 +40,12 @@ body {
     transform: rotate(360deg);
   }
 }
+
+
+.MyImgStuff
+{
+
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
