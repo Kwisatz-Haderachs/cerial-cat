@@ -10,31 +10,6 @@ export default function ReportView(props: any) {
     const [status, setStatus] = useState(0);
     const [baseURLBack, setBaseURLBack] = useState(props.baseURLBack)
 
-    const  INIT_VALUE = {
-        dateOfEvent: "",
-        timeOfEvent: "",
-        locationOfEvent: "",
-        eventType: false,
-        harm: false,
-        individuals: [],
-        typeOfEvent: [],
-        effectOfIncident: false,
-        witness1: "",
-        witnessNumbers1: "",
-        witness2: "",
-        witnessNumbers2: "",
-        witness3: "",
-        witnessNumbers3: "",
-        departmentsInvolved: [],
-        description: "",
-        actions: "",
-        patientName: "",
-        patientPhone: "",
-        patientSSN: "",
-        patientAddress: "",
-    }
-
-    const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
 
     useEffect(()=> {
         setTimeout(()=>{
@@ -119,7 +94,7 @@ export default function ReportView(props: any) {
 
     const report = useForm({
         initialValues: {
-            dateOfEvent: "",
+            dateOfEvent: new Date(),
             timeOfEvent: "",
             locationOfEvent: "",
             eventType: false,
@@ -164,10 +139,10 @@ export default function ReportView(props: any) {
     });
 
     type FormValues = typeof report.values;
+    //const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
 
-    function convertDate(inputFormat: string) {
+    function convertDate(d: Date) {
         function pad(s: number) { return (s < 10) ? '0' + s : s; }
-        let d = new Date(inputFormat)
         return [pad(d.getFullYear()), pad(d.getMonth()+1), pad(d.getDate())].join('-')
     }
 
@@ -209,7 +184,6 @@ export default function ReportView(props: any) {
             console.log(response)
             setStatus(response.status)
             report.reset();
-            report.setValues(INIT_VALUE)
        } ).catch((error) => {
            console.log(error)
            setStatus(error.response.status)
