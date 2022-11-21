@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Box from "@mui/material/Box";
+import {Card, CardMedia,Typography, Grid} from "@mui/material";
 
 export default function LandingPage(props: any) {
     const [baseURL, setBaseURL] = useState(props.baseURL)
@@ -18,10 +18,58 @@ export default function LandingPage(props: any) {
         return(statusCodes[x])
     }
 
+    //  <Box justifyContent={'center'} alignItems ={'center'} >
+    //                    <img  src={`https://http.cat/${randomStatus()}.jpg`} />
+    //                 </Box>
     return(
-        <Box justifyContent={'center'} display={'flex'}>
-           <img  src={`https://http.cat/${randomStatus()}.jpg`} />
-        </Box>
-
+        <Grid container spacing ={2} sx={{height:"100vh"}}>
+            <Grid xs={6} >
+                <Card sx={{maxwidth: '50vh'}} >
+                    <CardMedia
+                        component= "img"
+                        height= "100%"
+                        image= "https://api.army.mil/e2/c/images/2013/02/13/282084/max1200.jpg"
+                        alt=""
+                    />
+                </Card>
+            </Grid>
+            <Grid xs={6} >
+                <Card sx={{maxwidth: '50vh'}}>
+                    <CardMedia
+                        component= "img"
+                        height= "100%"
+                        image = "https://media.defense.gov/2018/Aug/30/2001960763/-1/-1/0/180824-F-SK378-0057.JPG"
+                        alt = ""
+                    />
+                </Card>
+            </Grid>
+            <Grid xs={12} justifyContent={"center"} alignItems={"center"} display={"flex"}>
+                <Typography
+                    fontFamily={"Roboto"}
+                    //fontWeight={"Bold"}
+                    fontStyle={"Underline"}
+                    variant="h1" > Serious Incident Report</Typography>
+            </Grid>
+            <Grid xs={6} >
+                <Card sx={{maxwidth: '50vh'}}>
+                    <CardMedia
+                        component="img"
+                        height="100%"
+                        src = "/img/bradley.png"
+                        alt=""
+                    />
+                </Card>
+            </Grid>
+            <Grid xs={6} >
+                <Card sx={{maxwidth: '50vh'}}>
+                    <CardMedia
+                        component="img"
+                        height="100%"
+                        image = "https://warontherocks.com/wp-content/uploads/2018/10/rasmussen2-1024x662.jpg"
+                        alt=""
+                    />
+                </Card>
+            </Grid>
+        </Grid>
     )
 }
