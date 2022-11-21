@@ -30,7 +30,7 @@ export default function ListReport (props: any) {
             valueGetter: (params: GridValueGetterParams) =>
                  params.value ? "Harm" : "Potential Harm",
         },
-        {field: 'individualsInvolved', headerName: 'Individual(s) Involved',width: 250},
+        {field: 'individualsInvolved', headerName: 'Individual(s) Involved',width: 200},
         {field: 'eventCategory', headerName: 'Event Type', width: 200},
         {field: "action", headerName: 'Details', width: 100,
             renderCell: (params)=>{
@@ -40,6 +40,15 @@ export default function ListReport (props: any) {
                     props.handleOpen()
                 };
                 return <Button onClick={onClick}>View</Button>;
+            }
+        },
+        {field: "delete", headerName: 'Delete', width: 100,
+            renderCell: (params)=>{
+                const onClick=(e:any)=>{
+                    e.stopPropagation();
+                    props.deleteItem(params.row.id)
+                };
+                return <DeleteForeverIcon onClick={onClick}>View</DeleteForeverIcon>;
             }
         }
     ]
