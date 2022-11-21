@@ -1,10 +1,7 @@
 import * as React from 'react';
 import {Link} from "react-router-dom";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import {AppBar, Box, Toolbar} from '@mui/material';
 import { Button } from '@mantine/core';
-import IconButton from '@mui/material/IconButton';
 
 import { createTheme } from '@mui/material/styles';
 
@@ -22,6 +19,7 @@ export default function ButtonAppBar() {
             },
         },
     });
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
