@@ -3,11 +3,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {
     DataGrid,
     GridColDef,
-    GridRenderCellParams,
-    GridValueFormatterParams,
     GridValueGetterParams,
-    GridApi,
-    GridCellValue
+    GridToolbar
 } from '@mui/x-data-grid';
 
 export default function ListReport (props: any) {
@@ -33,7 +30,7 @@ export default function ListReport (props: any) {
             valueGetter: (params: GridValueGetterParams) =>
                  params.value ? "Harm" : "Potential Harm",
         },
-        {field: 'individualsInvolved', headerName: 'Individual(s) Involved',width: 200},
+        {field: 'individualsInvolved', headerName: 'Individual(s) Involved',width: 250},
         {field: 'eventCategory', headerName: 'Event Type', width: 200},
         {field: "action", headerName: 'Details', width: 100,
             renderCell: (params)=>{
@@ -49,7 +46,6 @@ export default function ListReport (props: any) {
 
     return (
 
-
         <div style={{ height: '100vh', width: '100%' }}>
             <DataGrid
                 rows={props.reportList}
@@ -57,52 +53,14 @@ export default function ListReport (props: any) {
                 pageSize={10}
                 rowsPerPageOptions={[25]}
                 checkboxSelection
+                components={{ Toolbar: GridToolbar }}
+                componentsProps={{
+                    toolbar: {
+                        showQuickFilter: true,
+                        quickFilterProps: {debounceMs: 500},
+                    },
+                }}
             />
         </div>
 
-
-        //
-        // <Table>
-        //         <thead>
-        //         <tr>
-        //             <th>Event Date</th>
-        //             <th>Location</th>
-        //             <th>Incident Type</th>
-        //             <th>Harm</th>
-        //             <th>Individuals(s)</th>
-        //             <th>Event Type</th>
-        //             <th>Delete</th>
-        //             <th>Deeeets</th>
-        //         </tr>
-        //         </thead>
-        //             <tbody>{rows}</tbody>
-        // </Table>
-
 )}
-/*
-return (
-    <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-        disableSelectionOnClick
-        experimentalFeatures={{ newEditingApi: true }}
-      />
-    </Box>
-  );
- */
-// const rows = props.reportList.map((element:any) => (
-//     <tr key={element.id}>
-//         <td>{element.dateTime}</td>
-//         <td>{element.location}</td>
-//         <td>{element.incidentEffect ? "Actual Event/Incident" : "Near Miss/CloseCall"}</td>
-//         <td>{element.harm ?  "Harm" : "Potential Harm"}</td>
-//         <td>{element.individualsInvolved.map((data: string) => (data+", "))}</td>
-//         <td>{element.eventCategory.map((data: string) => (data+", "))}</td>
-//         <td><DeleteForeverIcon onClick={() => {props.deleteItem(element.id)}} /></td>
-//         <td><Button variant={"subtle"} sx={{color:"#1A1B1E"}} onClick={() => {props.setItemView(element);props.handleOpen()}}> View </Button></td>
-//     </tr>
-// ));
