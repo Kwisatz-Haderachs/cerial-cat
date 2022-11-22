@@ -41,11 +41,15 @@ body {
   }
 }
 
+.catReport{
+    width: 50%;
+  height: 3em;
+  object-fit: contain;
 
-.MyImgStuff
-{
+}
 
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+.catList{
+  width: 50%;
+  height: 3em;
+  object-fit: contain;
 }
