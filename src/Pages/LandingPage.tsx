@@ -1,4 +1,5 @@
-import {Card, CardMedia,Typography, Grid} from "@mui/material";
+import {Typography, Paper} from "@mui/material";
+import tank from "../Images/tank.png"
 
 export default function LandingPage() {
 
@@ -16,60 +17,29 @@ export default function LandingPage() {
         return(statusCodes[x])
     }
 
-    //  <Box justifyContent={'center'} alignItems ={'center'} >
+    const styles = {
+        paperContainer: {
+            height: "100vh",
+            width: "100%",
+            backgroundImage: `url(${tank})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+
+        }
+    };
+
     //                    <img  src={`https://http.cat/${randomStatus()}.jpg`} />
-    //                 </Box>
     return(
-        <Grid container spacing ={0} sx={{height:"100vh", backgroundColor:"black"}}>
-            <Grid item xs={6} >
-                <Card sx={{maxwidth: '50vh'}} >
-                    <CardMedia
-                        component= "img"
-                        height= "100%"
-                        image= "https://api.army.mil/e2/c/images/2013/02/13/282084/max1200.jpg"
-                        alt=""
-                    />
-                </Card>
-            </Grid>
-            <Grid item xs={6} >
-                <Card sx={{maxwidth: '50vh'}}>
-                    <CardMedia
-                        component= "img"
-                        height= "100%"
-                        image = "https://media.defense.gov/2018/Aug/30/2001960763/-1/-1/0/180824-F-SK378-0057.JPG"
-                        alt = ""
-                    />
-                </Card>
-            </Grid>
-            <Grid  item xs={12} justifyContent={"center"} alignItems={"center"} display={"flex"}>
+        <Paper style={styles.paperContainer}>
                 <Typography
                     fontFamily={"Roboto"}
                     //fontWeight={"Bold"}
                     fontStyle={"Underline"}
                     padding={5}
                     color={"yellow"}
-                    variant="h1" > Serious Incident Report</Typography>
-            </Grid>
-            <Grid  item xs={6}>
-                <Card sx={{maxwidth: '50vh',maxHeight: '50vh', minHeight: 400}}>
-                    <CardMedia
-                        component="img"
-                        height="100%"
-                        image = "https://images.wsj.net/im-577679?width=1920&height=1080"
-                        alt= ""
-                    />
-                </Card>
-            </Grid>
-            <Grid item xs={6} >
-                <Card sx={{maxwidth: '50vh', maxHeight: '50vh',  minHeight: 400}}>
-                    <CardMedia
-                        component="img"
-                        height="100%"
-                        image = "https://api.army.mil/e2/c/images/2012/01/20/232645/size0-full.jpg"
-                        alt=""
-                    />
-                </Card>
-            </Grid>
-        </Grid>
+                    variant="h1" > Serious Incident Report
+                </Typography>
+    </Paper>
     )
 }
