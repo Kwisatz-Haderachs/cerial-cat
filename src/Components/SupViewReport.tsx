@@ -24,7 +24,7 @@ export default function SupViewReport(props: any) {
                         <Grid.Col span={6}>
                             <Textarea
                                 readOnly={true}
-                                label={"Date of Event"}
+                                label={"Date of Event (Zulu)"}
                                 withAsterisk
                                 required
                                 defaultValue={report.dateTime.split(" ")[0]}
@@ -35,7 +35,7 @@ export default function SupViewReport(props: any) {
                                 readOnly={true}
                                 required
                                 withAsterisk
-                                label={"Time of Event"}
+                                label={"Time of Event (Zulu)"}
                                 defaultValue={report.dateTime.split(" ")[1]}
                             />
                         </Grid.Col>

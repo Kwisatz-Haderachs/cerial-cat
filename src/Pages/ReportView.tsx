@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {TextInput, Select, MultiSelect, Button, Grid, Stack, Box} from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
+import { DatePicker, TimeInput } from '@mantine/dates';
 import { useForm} from '@mantine/form';
+import { IconClock } from '@tabler/icons';
 import { MantineProvider } from '@mantine/core';
 import axios from "axios";
+import {DateTimePicker} from "@mui/x-date-pickers";
 
 
 export default function ReportView(props: any) {
@@ -95,7 +97,7 @@ export default function ReportView(props: any) {
     const report = useForm({
         initialValues: {
             dateOfEvent: new Date(),
-            timeOfEvent: "",
+            timeOfEvent: new Date(),
             locationOfEvent: "",
             eventType: false,
             harm: false,
@@ -120,7 +122,7 @@ export default function ReportView(props: any) {
 
         validate: {
             //dateOfEvent: (value) => (/^(2\d{3}-(0[1-9]|1[0-9])-(0[1-9]|[12]\d|3[01]))/.test(value.toLocaleString()) ? null : "Invalid date"),
-            timeOfEvent: (value) => (/^([01]\d|2[0-3]):([0-5]\d)$/.test(value) ? null : "Enter Military Time as ##:##" ),
+            //timeOfEvent: (value) => (/^([01]\d|2[0-3]):([0-5]\d)$/.test(value) ? null : "Enter Military Time as ##:##" ),
             locationOfEvent: (value) => (value.length < 10 ? 'Location input is too short' : null),
             description:(value) => (value.length < 15 ? 'Enter a more detailed description' : null),
             actions:(value) => (value.length < 15 ? 'Enter more detailed action' : null),
@@ -141,23 +143,31 @@ export default function ReportView(props: any) {
     type FormValues = typeof report.values;
     //const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
 
+
     function convertDate(d: Date) {
         function pad(s: number) { return (s < 10) ? '0' + s : s; }
         return [pad(d.getFullYear()), pad(d.getMonth()+1), pad(d.getDate())].join('-')
     }
 
+    //Covert datetime by GMT offset
+    function convertLocalDateToUTCDate(d:Date, t: Date) {
+        let s = d.toDateString() + " " + t.toTimeString()
+        let date = new Date(s);
+        //Local time converted to UTC
+        let localOffset = date.getTimezoneOffset() * 60000;
+        let localTime = date.getTime();
+        let da = localTime + localOffset;
+        date = new Date(da);
+        return date;
+    }
 
   async function handleSubmit (values: FormValues) {
         report.isValid();
         report.validate();
-        console.log(report)
-        console.log("Validated")
-        let date = convertDate(values.dateOfEvent)
-        let time = values.timeOfEvent
-        console.log(time)
-        let dateTime = date + " " + time
-        console.log(time)
-        console.log(date)
+        let UTC = convertLocalDateToUTCDate(values.dateOfEvent, values.timeOfEvent)
+        let date = convertDate(UTC)
+        let dateTime = date + " " + UTC.toTimeString().substring(0,5)
+        console.log(dateTime)
         //post request
 
         let witnessNames = [report.values.witness1, report.values.witness2, report.values.witness3 ]
@@ -235,12 +245,12 @@ export default function ReportView(props: any) {
                          />
                     </Grid.Col>
                     <Grid.Col span={6}>
-                        <TextInput
-                            label={"Time of Event"}
+                        <TimeInput
+                            defaultValue={new Date()}
+                            label="Pick time"
+                            icon={<IconClock size={16} />}
+                            format="24"
                             withAsterisk
-                            required
-                            defaultValue={"00:00"}
-                            {...report.getInputProps(('timeOfEvent'))}
                         />
                     </Grid.Col>
                 </Grid>
