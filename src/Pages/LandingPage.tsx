@@ -11,7 +11,7 @@ import {
 import tank from '../Images/tank.png';
 import cat from '../Images/ShapeBlurCat.png';
 import { url } from 'inspector';
-import crashLanding from '../Images/crashBlur.png';
+import crashLanding from '../Images/ShapeBlurCrash.png';
 
 export default function LandingPage(props: any) {
   let statusCodes = [
@@ -33,6 +33,8 @@ export default function LandingPage(props: any) {
   }
 
   const pictureType = props.catView ? cat : crashLanding;
+  const textClass = props.catView ? 'catMode' : '';
+  const textSize = props.catView ? 50 : 'h1';
   //                    <img  src={`https://http.cat/${randomStatus()}.jpg`} />
   return (
     <Grid sx={{ padding: '3vw' }}>
@@ -42,7 +44,10 @@ export default function LandingPage(props: any) {
             <Text>Team Cerial Cat</Text>
             <br></br>
           </Card.Section>
-          <Title> Serious Incident Reporter</Title>
+          <Title size={textSize} className={textClass}>
+            {' '}
+            Serious Incident Reporter
+          </Title>
           <br></br>
           <br></br>
           <Text>
