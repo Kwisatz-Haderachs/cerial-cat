@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
-import Box from "@mui/material/Box";
+import {Typography, Paper} from "@mui/material";
+import tank from "../Images/tank.png"
 
-export default function LandingPage(props: any) {
-    const [baseURL, setBaseURL] = useState(props.baseURL)
+export default function LandingPage() {
 
     let statusCodes = [100, 101, 102, 201, 202, 203, 204, 206, 207, 300, 301, 302, 303, 304, 305,
         307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415,
@@ -18,10 +17,28 @@ export default function LandingPage(props: any) {
         return(statusCodes[x])
     }
 
-    return(
-        <Box justifyContent={'center'} display={'flex'}>
-           <img  src={`https://http.cat/${randomStatus()}.jpg`} />
-        </Box>
+    const styles = {
+        paperContainer: {
+            height: "100vh",
+            width: "100%",
+            backgroundImage: `url(${tank})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
 
+        }
+    };
+
+    //                    <img  src={`https://http.cat/${randomStatus()}.jpg`} />
+    return(
+        <Paper style={styles.paperContainer}>
+                <Typography
+                    fontFamily={"Roboto"}
+                    fontStyle={"Underline"}
+                    padding={5}
+                    color={"yellow"}
+                    variant="h1" > Serious Incident Report
+                </Typography>
+    </Paper>
     )
 }
