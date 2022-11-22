@@ -11,6 +11,14 @@ body {
   pointer-events: none;
 }
 
+.catMode{
+  font-family: Cat;
+  
+  background: -webkit-linear-gradient(rgb(119, 80, 228), rgb(237, 165, 165));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

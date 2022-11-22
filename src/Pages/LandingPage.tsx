@@ -9,9 +9,9 @@ import {
   Grid,
 } from '@mantine/core';
 import tank from '../Images/tank.png';
-import cat from '../Images/LandingCat.png';
+import cat from '../Images/ShapeBlurCat.png';
 import { url } from 'inspector';
-import crashLanding from '../Images/crashLanding2.png';
+import crashLanding from '../Images/crashBlur.png';
 
 export default function LandingPage(props: any) {
   let statusCodes = [
@@ -69,7 +69,9 @@ export default function LandingPage(props: any) {
           <Card.Section>
             <Image src={pictureType} />
           </Card.Section>
-          <Title> {props.catView ? ' CAT MODE ENABLED' : ''}</Title>
+          <Title size={80} ta="center" className="catMode">
+            {props.catView ? ' CAT MODE' : ''}
+          </Title>
         </Card>
       </Grid.Col>
     </Grid>
