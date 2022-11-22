@@ -247,7 +247,7 @@ export default function ReportView(props: any) {
                     <Grid.Col span={6}>
                         <TimeInput
                             defaultValue={new Date()}
-                            label="Pick time"
+                            label="Time of Event"
                             icon={<IconClock size={16} />}
                             format="24"
                             withAsterisk
