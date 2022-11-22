@@ -153,7 +153,6 @@ export default function ReportView(props: any) {
     function convertLocalDateToUTCDate(d:Date, t: Date) {
         let s = d.toDateString() + " " + t.toTimeString()
         let date = new Date(s);
-        //Local time converted to UTC
         let localOffset = date.getTimezoneOffset() * 60000;
         let localTime = date.getTime();
         let da = localTime + localOffset;
@@ -164,6 +163,7 @@ export default function ReportView(props: any) {
   async function handleSubmit (values: FormValues) {
         report.isValid();
         report.validate();
+
         let UTC = convertLocalDateToUTCDate(values.dateOfEvent, values.timeOfEvent)
         let date = convertDate(UTC)
         let dateTime = date + " " + UTC.toTimeString().substring(0,5)
@@ -251,6 +251,7 @@ export default function ReportView(props: any) {
                             icon={<IconClock size={16} />}
                             format="24"
                             withAsterisk
+                            {...report.getInputProps(('timeOfEvent'))}
                         />
                     </Grid.Col>
                 </Grid>
