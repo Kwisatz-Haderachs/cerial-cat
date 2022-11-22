@@ -41,7 +41,6 @@ body {
   }
 }
 
-
 .catReport{
     width: 50%;
   height: 3em;
@@ -53,5 +52,4 @@ body {
   width: 50%;
   height: 3em;
   object-fit: contain;
-
 }
