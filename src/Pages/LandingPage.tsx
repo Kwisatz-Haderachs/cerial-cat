@@ -34,7 +34,6 @@ export default function LandingPage() {
         <Paper style={styles.paperContainer}>
                 <Typography
                     fontFamily={"Roboto"}
-                    //fontWeight={"Bold"}
                     fontStyle={"Underline"}
                     padding={5}
                     color={"yellow"}
