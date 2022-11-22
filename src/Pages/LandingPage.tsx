@@ -1,7 +1,17 @@
-import { Card, Image, Text, Badge, Button, Group, Grid } from '@mantine/core';
+import {
+  Card,
+  Image,
+  Text,
+  Title,
+  Badge,
+  Button,
+  Group,
+  Grid,
+} from '@mantine/core';
 import tank from '../Images/tank.png';
 import cat from '../Images/LandingCat.png';
 import { url } from 'inspector';
+import crashLanding from '../Images/crashLanding2.png';
 
 export default function LandingPage(props: any) {
   let statusCodes = [
@@ -22,46 +32,44 @@ export default function LandingPage(props: any) {
     return statusCodes[x];
   }
 
-  const tankStyle = {
-    paperContainer: {
-      height: '100vh',
-      width: '100%',
-    },
-  };
-
-  const catStyle = {
-    paperContainer: {
-      height: '100vh',
-      width: '100%',
-    },
-  };
-
-  const styles = props.catView ? catStyle : tankStyle;
+  const pictureType = props.catView ? cat : crashLanding;
   //                    <img  src={`https://http.cat/${randomStatus()}.jpg`} />
   return (
-    <Grid>
-      <Grid.Col span={4}>
-        <Card  p="lg" radius="md" sx={{backgroundColor:'transparent'}}>
+    <Grid sx={{ padding: '3vw' }}>
+      <Grid.Col span={4} offset={1}>
+        <Card p="lg" radius="md" sx={{ backgroundColor: 'transparent' }}>
           <Card.Section>
             <Text>Team Cerial Cat</Text>
-            <Text> Serious Incident Reporter</Text>
+            <br></br>
           </Card.Section>
+          <Title> Serious Incident Reporter</Title>
+          <br></br>
+          <br></br>
           <Text>
             {' '}
             This website will replace the form and it will be able to be viewd
             by supervisors and be sent to proper command. Please login to
             continue.
           </Text>
+          <br></br>
 
-          <Button> Login</Button>
+          <Button
+            variant="outline"
+            size="lg"
+            sx={{ width: '40%', color: 'black', borderColor: 'black' }}
+            radius="xl"
+          >
+            {' '}
+            Login
+          </Button>
         </Card>
       </Grid.Col>
-      <Grid.Col span={4}>
-        <Card  p="lg" radius="md"  sx={{backgroundColor:'transparent'}}>
+      <Grid.Col span={4} offset={2}>
+        <Card p="lg" radius="md" sx={{ backgroundColor: 'transparent' }}>
           <Card.Section>
-            <Image src={tank}  />
+            <Image src={pictureType} />
           </Card.Section>
-          <Text> Cat mode thingy</Text>
+          <Title> {props.catView ? ' CAT MODE ENABLED' : ''}</Title>
         </Card>
       </Grid.Col>
     </Grid>
