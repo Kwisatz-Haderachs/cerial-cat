@@ -26,9 +26,9 @@ function App() {
                 <Box>
                     <CatBar switchView={switchView}/>
                     <Routes>
-                        <Route path={"/report"} element={<ReportView baseURLBack={baseURLBack}/>}/>
+                        <Route path={"/report"} element={<ReportView  baseURLBack={baseURLBack}/>}/>
                         <Route path={"/view"} element={<SupervisorView baseURLBack={baseURLBack}/>}/>
-                        <Route path={'/'} element={<LandingPage/>}/>
+                        <Route path={'/'} element={<LandingPage catView={catView}/>}/>
                     </Routes>
                 </Box>
 

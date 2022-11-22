@@ -1,7 +1,8 @@
 import {Typography, Paper} from "@mui/material";
 import tank from "../Images/tank.png"
+import cat from "../Images/LandingCat.png"
 
-export default function LandingPage() {
+export default function LandingPage(props:any) {
 
     let statusCodes = [100, 101, 102, 201, 202, 203, 204, 206, 207, 300, 301, 302, 303, 304, 305,
         307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415,
@@ -17,7 +18,8 @@ export default function LandingPage() {
         return(statusCodes[x])
     }
 
-    const styles = {
+
+    const tankStyle = {
         paperContainer: {
             height: "100vh",
             width: "100%",
@@ -27,7 +29,26 @@ export default function LandingPage() {
             backgroundSize: 'cover',
 
         }
-    };
+
+    
+    }
+
+    const catStyle = {
+        paperContainer: {
+            height: "100vh",
+            width: "100%",
+            backgroundImage: `url(${cat})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+
+        }
+    }
+
+
+    const styles = 
+        props.catView? catStyle : tankStyle
+    ;
 
     //                    <img  src={`https://http.cat/${randomStatus()}.jpg`} />
     return(
