@@ -1,46 +1,56 @@
 import * as React from 'react';
 import {Link} from "react-router-dom";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import { Anchor } from '@mantine/core';
+import {Button, Flex, Grid, Switch} from '@mantine/core';
+import {createTheme} from '@mui/material/styles';
+import {IconHandStop, IconPaw, IconHome} from "@tabler/icons";
 
-export default function ButtonAppBar() {
+
+
+
+export default function ButtonAppBar(props: any) {
+
+
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: '#5A5560',
+            },
+            secondary: {
+                main: '#7b777f',
+            },
+        },
+    });
+
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
-                        <Link style={{color:"inherit"}} to={"/report"}>
-                            <Button
-                                variant={'contained'}
-                            >Report</Button>
-                        </Link>
-                    </IconButton>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
-                        <Link style={{color:"inherit"}} to={"/view"}>
-                            <Button
-                                variant={'contained'}
-                            >View</Button>
-                        </Link>
-                    </IconButton>
-                    <Button color="inherit">Login</Button>
-                </Toolbar>
-            </AppBar>
-        </Box>
+
+
+        <Grid sx={{backgroundColor: '#2C2E33'}} align={'center'}>
+            <Grid.Col  span={'auto'}>
+                <div style={{alignContent:'center',marginTop:'10px'}}>
+                    <Link style={{padding:'10px',alignContent:'center'}}  to={""}>
+                     <IconHome style={{color: 'white'}}/>
+                    </Link>
+                    SIR Reporting Home
+                </div>
+            </Grid.Col>
+            <Grid.Col span={'content'} sx={{marginTop:'10px'}}>
+                <Link style={{margin: '10px', textDecoration: "initial", color: "inherit"}} to={"/report"}>
+                    <Button sx={{color: '#FAED26'}} color="gray"> Make New Report </Button>
+                </Link>
+                <Link style={{textDecoration: "initial", color: "inherit"}} to={"/view"}>
+                    <Button sx={{color: '#FAED21'}} color="gray"> View All Reports </Button>
+                </Link>
+
+            </Grid.Col>
+        <Grid.Col span={'auto'} >
+            <Grid
+                justify={'flex-end'}
+                >
+                <Switch sx={{padding:'10px'}} onLabel={<IconPaw/>} offLabel={<IconHandStop/>} onClick={props.switchView}/>
+            </Grid>
+        </Grid.Col>
+        </Grid>
+
+
     );
 }

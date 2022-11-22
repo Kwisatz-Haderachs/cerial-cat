@@ -1,62 +1,38 @@
 import React, {useEffect, useState} from 'react';
-import {TextInput, Select, MultiSelect, Button} from '@mantine/core';
-import { DatePicker, TimeInput } from '@mantine/dates';
+import {TextInput, Select, MultiSelect, Button, Grid, Stack, Box} from '@mantine/core';
+import { DatePicker } from '@mantine/dates';
 import { useForm} from '@mantine/form';
-import {Grid, Stack, Box, Alert, AlertTitle} from "@mui/material";
+import { MantineProvider } from '@mantine/core';
 import axios from "axios";
 
 
-export default function ReportView() {
+export default function ReportView(props: any) {
     const [status, setStatus] = useState(0);
+    const [baseURLBack, setBaseURLBack] = useState(props.baseURLBack)
 
-    const  INIT_VALUE = {
-        dateOfEvent: "",
-        //timeOfEvent: convertTime(""),
-        locationOfEvent: "",
-        eventType: false,
-        harm: false,
-        individuals: [],
-        typeOfEvent: [],
-        effectOfIncident: false,
-        witness1: "",
-        witnessNumbers1: "",
-        witness2: "",
-        witnessNumbers2: "",
-        witness3: "",
-        witnessNumbers3: "",
-        departmentsInvolved: [],
-        description: "",
-        actions: "",
-        patientName: "",
-        patientPhone: "",
-        patientSSN: "",
-        patientAddress: "",
-    }
-
-    const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
-
-    
 
     useEffect(()=> {
         setTimeout(()=>{
             notify()
             setStatus(0)
-        }, 5000)
+        }, 4000)
     },[status])
 
     function notify(){
+        let cat : string = `https://http.cat/${status}.jpg`;
+
         if(status === 200){
             return(
-                <Alert variant="filled" severity="success" >
-                    <AlertTitle>Success</AlertTitle>
-                </Alert>
+                <img src={cat} alt={""}  />
             )
         } else if( status >= 400){
             return (
-                <Alert variant="filled" severity="error">
-                    <AlertTitle>Error</AlertTitle>
-                </Alert>
+                    <img src={cat} alt={""}  />
             )
+        }
+        else if (status > 0) {
+            return (
+                <img src={cat} alt={""}/>)
         }
     }
 
@@ -118,7 +94,7 @@ export default function ReportView() {
 
     const report = useForm({
         initialValues: {
-            dateOfEvent: "",
+            dateOfEvent: new Date(),
             timeOfEvent: "",
             locationOfEvent: "",
             eventType: false,
@@ -163,28 +139,11 @@ export default function ReportView() {
     });
 
     type FormValues = typeof report.values;
+    //const date = (new Date(), 'yyyy-MM-dd hh:mm:ss', 'en_US')
 
-    function convertDate(inputFormat: string) {
+    function convertDate(d: Date) {
         function pad(s: number) { return (s < 10) ? '0' + s : s; }
-        let d = new Date(inputFormat)
-        return [pad(d.getFullYear()), pad(d.getMonth()+1), pad(d.getDate()+1)].join('-')
-    }
-
-    function convertTime(inputFormat: string) {
-        let t = new Date(inputFormat).toLocaleTimeString()
-        let s = '';
-        for (let i = t.length-1; i === 0; i--) {
-            if(t[i] === ":"){
-                s = t.substring(0, i);
-                break;
-            }
-        }
-      //  console.log(s)
-        if(s.length < 5){
-            s = '0' + t.substring(0, 4);
-     //       console.log(s);
-        }
-        return s;
+        return [pad(d.getFullYear()), pad(d.getMonth()+1), pad(d.getDate())].join('-')
     }
 
 
@@ -204,7 +163,7 @@ export default function ReportView() {
         let witnessNames = [report.values.witness1, report.values.witness2, report.values.witness3 ]
         let witnessNumbers = [report.values.witnessNumbers1, report.values.witnessNumbers2, report.values.witnessNumbers3]
 
-        await axios.post("http://localhost:8080/Report", {
+        await axios.post(`${baseURLBack}`, {
             "dateTime": dateTime,
             "location": report.values.locationOfEvent,
             "eventType": report.values.eventType,
@@ -224,13 +183,11 @@ export default function ReportView() {
         }).then((response) => {
             console.log(response)
             setStatus(response.status)
-            report.setValues(INIT_VALUE)
-            
-    
+            report.reset();
        } ).catch((error) => {
            console.log(error)
-           
-       })
+           setStatus(error.response.status)
+        })
 
 
     }
@@ -238,45 +195,67 @@ export default function ReportView() {
 
 
     return (
-        <Grid display={"flex"} justifyContent={"center"}>
+        <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+                colorScheme: 'dark',
+                colors: {
+                    // override dark colors to change them for all components
+                    dark: [
+                        '#d5d7e0',
+                        '#acaebf',
+                        '#8c8fa3',
+                        '#666980',
+                        '#1b1b26',
+                        '#1d1e30',
+                        '#0c0d21',
+                        '#01010a',
+                    ],
+                },
+            }}
+        >
+        <Grid grow justify={"center"}>
         <Box className="App" sx={{ width: '80%' }} >
             {notify()}
             <form onSubmit={report.onSubmit(handleSubmit)} onReset={report.onReset}>
             <h2>Incident Report Form</h2>
             <Stack>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <DatePicker
-                                label={"Date of Event"}
-                                inputFormat={"YYYY-MM-DD"}
-                                withAsterisk
-                                required
-                                defaultValue={new Date()}
-                                {...report.getInputProps(('dateOfEvent'))}
-                             />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextInput
-                                withAsterisk
-                                required
-                                label={"Time of Event"}
-                                defaultValue={"00:00"}
-                                {...report.getInputProps(('timeOfEvent'))}
-                            />
-                        </Grid>
-                    </Grid>
+                <Grid>
+                <Grid.Col span={6}>
+                        <DatePicker
+                            clearable
+                            label={"Date of Event"}
+                            inputFormat={"YYYY-MM-DD"}
+                            withAsterisk
+                            required
+                            // defaultValue={null}
+                            // cannot set value to null due to being assigned string in form, clearable doesn't work
+                            {...report.getInputProps(('dateOfEvent'))}
+                         />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                        <TextInput
+                            label={"Time of Event"}
+                            withAsterisk
+                            required
+                            defaultValue={"00:00"}
+                            {...report.getInputProps(('timeOfEvent'))}
+                        />
+                    </Grid.Col>
+                </Grid>
             <Box>
                 <TextInput
                     withAsterisk
                     required
                     label='Location of event'
-                    onChange={(event ) => report.setFieldValue('locationOfEvent', event.target.value)}
+                    {...report.getInputProps('locationOfEvent')}
                     //classNames={{ input: classes.invalid }}
                 >
                 </TextInput>
             </Box>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                <Grid>
+                    <Grid.Col span={6}>
                         <Select
                             withAsterisk
                             required
@@ -287,8 +266,8 @@ export default function ReportView() {
                             ]}
                             {...report.getInputProps('eventType')}
                         />
-                    </Grid>
-                    <Grid item xs={6}>
+                    </Grid.Col>
+                    <Grid.Col span={6}>
                         <Select
                             withAsterisk
                             required
@@ -299,7 +278,7 @@ export default function ReportView() {
                             ]}
                             {...report.getInputProps('harm')}
                         />
-                    </Grid>
+                    </Grid.Col>
                 </Grid>
                 <Box>
                     <MultiSelect
@@ -349,8 +328,8 @@ export default function ReportView() {
                         {...report.getInputProps('effectOfIncident')}
                     />
                 </Box>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                <Grid>
+                    <Grid.Col span={6}>
                         <TextInput
                             withAsterisk
                             required
@@ -358,8 +337,8 @@ export default function ReportView() {
                             {...report.getInputProps('witness1')}
                         >
                         </TextInput>
-                    </Grid>
-                    <Grid item xs={6}>
+                    </Grid.Col>
+                    <Grid.Col span={6}>
                         <TextInput
                             withAsterisk
                             required
@@ -367,35 +346,35 @@ export default function ReportView() {
                             {...report.getInputProps('witnessNumbers1')}
                         >
                         </TextInput>
-                    </Grid>
-                    <Grid item xs={6}>
+                    </Grid.Col>
+                    <Grid.Col span={6}>
                         <TextInput
                             label='Witness'
                             {...report.getInputProps('witness2')}
                         >
                         </TextInput>
-                    </Grid>
-                    <Grid item xs={6}>
+                    </Grid.Col>
+                    <Grid.Col span={6}>
                         <TextInput
                             label='Witness Number'
                             {...report.getInputProps('witnessNumbers2')}
                         >
                         </TextInput>
-                    </Grid>
-                    <Grid item xs={6}>
+                    </Grid.Col>
+                    <Grid.Col span={6}>
                         <TextInput
                             label='Witness'
                             {...report.getInputProps('witness3')}
                         >
                         </TextInput>
-                    </Grid>
-                    <Grid item xs={6}>
+                    </Grid.Col>
+                    <Grid.Col span ={6}>
                         <TextInput
                             label='Witness Number'
                             {...report.getInputProps('witnessNumbers3')}
                         >
                         </TextInput>
-                    </Grid>
+                    </Grid.Col>
                 </Grid>
                 <Box>
                     <MultiSelect
@@ -439,8 +418,8 @@ export default function ReportView() {
                 </Box>
 
                 <Box>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
+                    <Grid>
+                        <Grid.Col span={6}>
                             <TextInput
                                 withAsterisk
                                 required
@@ -449,8 +428,8 @@ export default function ReportView() {
                                 //classNames={{ input: classes.invalid }}
                             >
                             </TextInput>
-                        </Grid>
-                        <Grid item xs={6}>
+                        </Grid.Col>
+                        <Grid.Col span ={6}>
                             <TextInput
                                 withAsterisk
                                 required
@@ -459,7 +438,7 @@ export default function ReportView() {
                                 //classNames={{ input: classes.invalid }}
                             >
                             </TextInput>
-                        </Grid>
+                        </Grid.Col>
                     </Grid>
                 </Box>
                 <Box>
@@ -472,12 +451,13 @@ export default function ReportView() {
                     </TextInput>
                 </Box>
                 <Box>
-                    <Button style={{backgroundColor: "Green"}} type={"submit"} >Submit</Button>
+                    <Button variant="default" color="white" type={"submit"} >Submit</Button>
                 </Box>
             </Stack>
             </form>
         </Box>
         </Grid>
+        </MantineProvider>
     );
 }
 // const useStyles = createStyles((theme) => ({

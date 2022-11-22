@@ -1,6 +1,10 @@
 .App {
   text-align: center;
 }
+body {
+  background-color: #C1C2C5;
+
+}
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +39,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.catReport{
+    width: 50%;
+  height: 3em;
+  object-fit: contain;
+
+}
+
+.catList{
+  width: 50%;
+  height: 3em;
+  object-fit: contain;
 }
