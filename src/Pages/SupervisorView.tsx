@@ -3,8 +3,12 @@ import {Alert, AlertTitle, Box, Grid, Modal, CssBaseline, ThemeProvider, createT
 import axios from "axios";
 import ListReport from "../Components/ListReport";
 import SupViewReport from "../Components/SupViewReport";
+import LandingPage from "./LandingPage";
+import {useAuth0, withAuthenticationRequired} from "@auth0/auth0-react";
+import Profile from "../Components/Profile";
 
-export default function SupervisorView(props: any) {
+function SupervisorView(props: any) {
+
     const [baseURLBack, setBaseURLBack] = useState(props.baseURLBack)
     const [baseURLFront, setBaseURLFront] = useState(props.baseURLFront)
     const [baseURL, setBaseURL] = useState(props.baseURL)
@@ -14,7 +18,7 @@ export default function SupervisorView(props: any) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [status, setStatus] = useState(0);
-
+    const { user } = useAuth0();
     useEffect(() => {
         getData().then(r => {console.log(r)});
     },[])
@@ -96,6 +100,13 @@ export default function SupervisorView(props: any) {
                     {notify()}
                 </Grid>
             </Grid>
+
         </ThemeProvider>
+
     )
+
 }
+
+export default withAuthenticationRequired(SupervisorView, {
+    onRedirecting: () => <LandingPage />,
+});

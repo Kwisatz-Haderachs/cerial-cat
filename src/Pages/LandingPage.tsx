@@ -14,8 +14,13 @@ import { url } from 'inspector';
 import crashLanding from '../Images/ShapeBlurCrash.png';
 import catCrashFinal from '../Images/CatCrashFinal.png';
 import crashFinal from '../Images/CrashFinal.png';
+import {useAuth0} from "@auth0/auth0-react";
+import Profile from "../Components/Profile";
 
 export default function LandingPage(props: any) {
+  const {loginWithRedirect, isAuthenticated} = useAuth0();
+  const {logout} = useAuth0();
+  const {isLoading} = useAuth0()
   let statusCodes = [
     100, 101, 102, 201, 202, 203, 204, 206, 207, 300, 301, 302, 303, 304, 305,
     307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412,
@@ -59,16 +64,32 @@ export default function LandingPage(props: any) {
             continue.
           </Text>
           <br></br>
+          { isLoading ? <div> Loading....</div> : <div></div>}
+          {!isAuthenticated ?
+              <Button
+                  variant="outline"
+                  size="lg"
+                  sx={{width: '40%', color: 'black', borderColor: 'black'}}
+                  radius="xl"
+                  onClick={() => loginWithRedirect()}
+              >
 
-          <Button
-            variant="outline"
-            size="lg"
-            sx={{ width: '40%', color: 'black', borderColor: 'black' }}
-            radius="xl"
-          >
-            {' '}
-            Login
-          </Button>
+                {' '}
+                Login
+              </Button>
+:
+              <Button
+                  variant="outline"
+                  size="lg"
+                  sx={{width: '40%', color: 'black', borderColor: 'black'}}
+                  radius="xl"
+                  onClick={() => logout()}
+              >
+                {' '}
+                LogOut
+              </Button>
+          }
+          <Profile></Profile>
         </Card>
       </Grid.Col>
       <Grid.Col span={4} offset={2}>

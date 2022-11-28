@@ -1,9 +1,19 @@
 import React, {useState} from "react";
 import {Button, MultiSelect, Select, Textarea, Text, Box, Grid, Stack} from "@mantine/core";
+import {Navigate} from "react-router";
+import {useAuth0} from "@auth0/auth0-react";
 
 export default function SupViewReport(props: any) {
     const [report, setReport] = useState(props.itemView)
-
+    //Custom Method
+    function handleRedirect()
+    {
+        console.log("Auth: " + props.isAuthenticated)
+        if (!props.isAuthenticated)
+        {
+            return <Navigate to="/" />
+        }
+    }
     const Commands=[
         {label: 'SWF',value:'SWF'},
         {label: 'AFC',value:'AFC'},
@@ -240,6 +250,9 @@ export default function SupViewReport(props: any) {
                     </Box>
                 </Stack>
             </Grid>
+            {handleRedirect()}
         </Box>
+
         )
+
 }
