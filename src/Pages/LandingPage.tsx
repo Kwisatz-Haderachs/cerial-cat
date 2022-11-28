@@ -12,6 +12,8 @@ import tank from '../Images/tank.png';
 import cat from '../Images/ShapeBlurCat.png';
 import { url } from 'inspector';
 import crashLanding from '../Images/ShapeBlurCrash.png';
+import catCrashFinal from '../Images/CatCrashFinal.png';
+import crashFinal from '../Images/CrashFinal.png';
 
 export default function LandingPage(props: any) {
   let statusCodes = [
@@ -32,7 +34,7 @@ export default function LandingPage(props: any) {
     return statusCodes[x];
   }
 
-  const pictureType = props.catView ? cat : crashLanding;
+  const pictureType = props.catView ? catCrashFinal : crashFinal;
   const textClass = props.catView ? 'catMode' : '';
   const textSize = props.catView ? 50 : 'h1';
   //                    <img  src={`https://http.cat/${randomStatus()}.jpg`} />
