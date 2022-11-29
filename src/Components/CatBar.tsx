@@ -43,7 +43,8 @@ export default function CatBar(props: any) {
                    
               
             </Grid.Col>
-            <Grid.Col span={'content'}>
+
+            <Grid.Col span={"content"}>
                 <Link style={{textDecoration: "initial", color: "inherit"}} to={"/report"}>
                     <img className = "catReport"
                         alt="cat button"
@@ -54,7 +55,7 @@ export default function CatBar(props: any) {
                     <img
                         className="catList"
                         alt={"A list of cats"}
-                        src='/catList.png'/>
+                        src='/CatList.png'/>
                 </Link>
             </Grid.Col>
             <Grid.Col span={'auto'}>
