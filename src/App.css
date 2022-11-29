@@ -50,10 +50,9 @@ body {
 }
 
 .catReport{
-    width: 50%;
+  width: 50%;
   height: 3em;
   object-fit: contain;
-
 }
 
 .catList{
