@@ -3,6 +3,10 @@ import {Button, MultiSelect, Select, Textarea, Text, Box, Grid, Stack} from "@ma
 import {Navigate} from "react-router";
 import {useAuth0} from "@auth0/auth0-react";
 
+
+
+//import nodemailer from "nodemailer";
+
 export default function SupViewReport(props: any) {
     const [report, setReport] = useState(props.itemView)
     //Custom Method
@@ -14,6 +18,8 @@ export default function SupViewReport(props: any) {
             return <Navigate to="/" />
         }
     }
+
+
     const Commands=[
         {label: 'SWF',value:'SWF'},
         {label: 'AFC',value:'AFC'},
@@ -22,7 +28,23 @@ export default function SupViewReport(props: any) {
 
     function emailFunction(){
         props.handleClose();
-        alert("Successfully submitted")
+        Email.send({
+            Host : "smtp.elasticemail.com",
+            Username : "cerialcat6@gmail.com",
+            Password : "F25E40A2F3DA1335A48B0911D076A75801B6",
+            To : 'christopher.a.reif.mil@swf.army.mil',
+            From : "cerialcat6@gmail.com",
+            Subject : "Meow",
+            Body : "Kitty Vengeance!"
+        }).then((message)=>{
+
+            if (message === "OK") { return alert("Successfully sent to CHRIS REIF's'Email  !!")}
+               else{ return  alert(message)}
+            }
+        ).catch((e)=>{
+            alert("GOT DANGINT")
+        });
+
     }
 
     return (
@@ -256,7 +278,7 @@ export default function SupViewReport(props: any) {
                     </Box>
                 </Stack>
             </Grid>
-            {handleRedirect()}
+        {/*{handleRedirect()}*/}
         </Box>
 
         )
