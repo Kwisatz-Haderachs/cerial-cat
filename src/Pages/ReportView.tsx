@@ -39,7 +39,7 @@ export default function ReportView(props: any) {
     }
 
 
-    const departments = [
+    const [departmentsInvolved,setDepartmentsInvolved] = useState([
         {value: 'Ambulatory Care', label: 'Ambulatory Care'},
         {value: 'Behavioral/Mental Health', label: 'Behavioral/Mental Health'},
         {value: 'Dental', label: 'Dental'},
@@ -55,9 +55,9 @@ export default function ReportView(props: any) {
         {value: 'Radiology', label: 'Radiology'},
         {value: 'Surgery', label: 'Surgery'},
         {value: 'Other', label: 'Other'}
-    ];
+    ]);
 
-    const [individualsInvolved, setindividualsInvolved] = useState( [
+    const [individualsInvolved, setIndividualsInvolved] = useState( [
         {value: 'Patient', label: 'Patient'},
         {value: 'Family Member - Adult', label: 'Family Member - Adult'},
         {value: 'Family Member - Child', label: 'Family Member - Child'},
@@ -303,7 +303,7 @@ export default function ReportView(props: any) {
                         getCreateLabel={(query) => `+ Create ${query}`}
                         onCreate={(query) => {
                             const item = { value: query, label: query };
-                            setindividualsInvolved((current) => [...current, item]);
+                            setIndividualsInvolved((current) => [...current, item]);
                             return item;
                         }}
                         {...report.getInputProps('individuals')}
@@ -391,9 +391,16 @@ export default function ReportView(props: any) {
                     <MultiSelect
                         withAsterisk
                         required
-                        data={departments}
+                        data={departmentsInvolved}
                         placeholder="Select Departments"
                         label="Departments Involved"
+                        creatable
+                        getCreateLabel={(query) => `+ Create ${query}`}
+                        onCreate={(query) => {
+                            const item = { value: query, label: query };
+                            setDepartmentsInvolved((current) => [...current, item]);
+                            return item;
+                        }}
                         {...report.getInputProps('departmentsInvolved')}
                         />
                 </Box>
