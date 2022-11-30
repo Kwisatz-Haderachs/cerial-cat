@@ -14,7 +14,7 @@ import {useAuth0} from "@auth0/auth0-react";
 const App: React.FC = () => {
     const {isAuthenticated} = useAuth0();
     const [catView, setCatView] = useState(false);
-    const [baseURLBack, setBaseURLBack] = useState("https://demoshowing8829.herokuapp.com/Report")
+    const [baseURLBack, setBaseURLBack] = useState("http://localhost:8080/Report")
 
     function switchView() {
         setCatView(!catView)
