@@ -67,6 +67,15 @@ export default function ListReport (props: any) {
                     toolbar: {
                         showQuickFilter: true,
                         quickFilterProps: {debounceMs: 500},
+                        sx: {
+                            '& .MuiTypography-root': {
+                                color: 'yellow',
+                                fontSize: 20,
+                            },
+                            '& .MuiDataGrid-filterForm': {
+                                bgcolor: 'lightblue',
+                            },
+                        },
                     },
                 }}
             />
