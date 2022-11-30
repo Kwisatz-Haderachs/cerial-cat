@@ -15,7 +15,7 @@ const App: React.FC = () => {
     const {isAuthenticated} = useAuth0();
     const [catView, setCatView] = useState(false);
     const [baseURLBack, setBaseURLBack] = useState("http://localhost:8080/Report")
-
+    document.title = "SIR Report"
     function switchView() {
         setCatView(!catView)
 
@@ -59,6 +59,7 @@ const App: React.FC = () => {
 
 
     return (
+
         catSwitch()
     );
 }
