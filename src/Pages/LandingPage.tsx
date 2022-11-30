@@ -89,8 +89,7 @@ export default function LandingPage(props: any) {
                 LogOut
               </Button>
           }
-          <Profile></Profile>
-        </Card>
+          </Card>
       </Grid.Col>
       <Grid.Col span={4} offset={2}>
         <Card p="lg" radius="md" sx={{ backgroundColor: 'transparent' }}>
