@@ -20,6 +20,11 @@ export default function SupViewReport(props: any) {
         {label:'HQDA',value:'HQDA'}
     ]
 
+    function emailFunction(){
+        props.handleClose();
+        alert("Successfully submitted")
+    }
+
     return (
         <Box  sx={(theme) => ({
                 backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -243,8 +248,9 @@ export default function SupViewReport(props: any) {
                 {...props} />
                         <Button style={{backgroundColor: "#2C2E33", color:"yellow",  margin: 10}} onClick = {()=> {props.handleClose()}} >Cancel</Button>
                         <Button style={{backgroundColor: "#2C2E33", color:"yellow", margin: 10}} onClick = {()=> {
-                            props.handleClose();
-                            alert("Successfully submitted")}}>
+
+                            emailFunction()
+                        }}>
                             Send to Command
                         </Button>
                     </Box>

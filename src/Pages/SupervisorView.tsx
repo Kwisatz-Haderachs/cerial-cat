@@ -75,7 +75,7 @@ function SupervisorView(props: any) {
             <CssBaseline />
             <Grid container spacing ={2}>
             <Grid display={"flex"}  justifyContent={"center"}  xs = {12}>
-                <Box className={"report"} sx={{ width: '80%', height: '100vh', marginTop: 10, backgroundColor:"#A6A7AB", border: 1 }} >
+                <Box className={"report"} sx={{ width: '80%', height: '100vh', marginTop: 10, backgroundColor:"#3A3B3C", border: 1 }} >
                     <div>
                         <ListReport deleteItem={deleteItem} reportList={reportList} setItemView = {setItemView} handleOpen={handleOpen}/>
 
