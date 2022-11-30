@@ -278,7 +278,7 @@ export default function SupViewReport(props: any) {
                     </Box>
                 </Stack>
             </Grid>
-        {/*{handleRedirect()}*/}
+        {handleRedirect()}
         </Box>
 
         )
