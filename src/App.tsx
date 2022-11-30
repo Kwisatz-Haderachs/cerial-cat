@@ -30,7 +30,7 @@ const App: React.FC = () => {
                     <CatBar switchView={switchView}/>
                     {/*<LoginButton></LoginButton>*/}
                     <Routes>
-                        <Route path={"/report"} element={<ReportView  baseURLBack={baseURLBack}/>}/>
+                        <Route path={"/report"} element={<ReportView catView={catView} baseURLBack={baseURLBack}/>}/>
                         <Route path={"/view"} element={<SupervisorView baseURLBack={baseURLBack} />}/>
                         <Route path={'/'} element={<LandingPage catView={catView}/>}/>
                     </Routes>

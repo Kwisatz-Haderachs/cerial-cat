@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {TextInput, Select, MultiSelect, Button, Grid, Stack, Box} from '@mantine/core';
+import {TextInput, Select, MultiSelect, Button, Grid, Stack, Box, Alert} from '@mantine/core';
 import { DatePicker, TimeInput } from '@mantine/dates';
 import { useForm} from '@mantine/form';
-import { IconClock } from '@tabler/icons';
+import {IconAlertCircle, IconClock} from '@tabler/icons';
 import { MantineProvider } from '@mantine/core';
 import axios from "axios";
 
@@ -19,21 +19,43 @@ export default function ReportView(props: any) {
         }, 4000)
     },[status])
 
-    function notify(){
-        let cat : string = `https://http.cat/${status}.jpg`;
+    function notify() {
 
-        if(status === 200){
-            return(
-                <img src={cat} alt={""}  />
-            )
-        } else if( status >= 400){
-            return (
-                    <img src={cat} alt={""}  />
-            )
-        }
-        else if (status > 0) {
-            return (
-                <img src={cat} alt={""}/>)
+        if (props.catView === true) {
+            let cat: string = `https://http.cat/${status}.jpg`;
+
+            if (status === 200) {
+                return (
+                    <img src={cat} alt={""}/>
+                )
+            } else if (status >= 400) {
+                return (
+                    <img src={cat} alt={""}/>
+                )
+            } else if (status > 0) {
+                return (
+                    <img src={cat} alt={""}/>)
+            }
+        } else {
+            if (status === 200) {
+                return (
+                    <Alert icon={<IconAlertCircle size={16}/>} title="Success" color="green">
+                        Your report has been submitted, an admin will review it shortly
+                    </Alert>
+                )
+            } else if (status >= 400) {
+                return (
+                    <Alert icon={<IconAlertCircle size={16}/>} title="Error" color="red">
+                        There was an error
+                    </Alert>
+                )
+            } else if (status > 0) {
+                return (
+                    <Alert icon={<IconAlertCircle size={16}/>} title="Bummer!" color="yellow">
+                        ¯\_(ツ)_/¯
+                    </Alert>
+                )
+            }
         }
     }
 
