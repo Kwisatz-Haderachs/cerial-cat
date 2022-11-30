@@ -5,7 +5,6 @@ import { useForm} from '@mantine/form';
 import { IconClock } from '@tabler/icons';
 import { MantineProvider } from '@mantine/core';
 import axios from "axios";
-import {DateTimePicker} from "@mui/x-date-pickers";
 
 
 export default function ReportView(props: any) {
@@ -39,7 +38,7 @@ export default function ReportView(props: any) {
     }
 
 
-    const [departmentsInvolved,setDepartmentsInvolved] = useState([
+    const [departments,setDepartments] = useState([
         {value: 'Ambulatory Care', label: 'Ambulatory Care'},
         {value: 'Behavioral/Mental Health', label: 'Behavioral/Mental Health'},
         {value: 'Dental', label: 'Dental'},
@@ -54,7 +53,6 @@ export default function ReportView(props: any) {
         {value: 'Pharmacy', label: 'Pharmacy'},
         {value: 'Radiology', label: 'Radiology'},
         {value: 'Surgery', label: 'Surgery'},
-        {value: 'Other', label: 'Other'}
     ]);
 
     const [individualsInvolved, setIndividualsInvolved] = useState( [
@@ -391,18 +389,19 @@ export default function ReportView(props: any) {
                     <MultiSelect
                         withAsterisk
                         required
-                        data={departmentsInvolved}
+                        data={departments}
                         placeholder="Select Departments"
                         label="Departments Involved"
+                        searchable
                         creatable
                         getCreateLabel={(query) => `+ Create ${query}`}
                         onCreate={(query) => {
                             const item = { value: query, label: query };
-                            setDepartmentsInvolved((current) => [...current, item]);
+                            setDepartments((current) => [...current, item]);
                             return item;
                         }}
                         {...report.getInputProps('departmentsInvolved')}
-                        />
+                    />
                 </Box>
                 <Box>
                     <TextInput
