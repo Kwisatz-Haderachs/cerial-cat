@@ -14,7 +14,7 @@ import {useAuth0} from "@auth0/auth0-react";
 const App: React.FC = () => {
     const {isAuthenticated} = useAuth0();
     const [catView, setCatView] = useState(false);
-    const [baseURLBack, setBaseURLBack] = useState("http://localhost:8080/Report")
+    const [baseURLBack, setBaseURLBack] = useState("https://demoshowing8829.herokuapp.com/Report")
     document.title = "SIR Report"
     function switchView() {
         setCatView(!catView)
@@ -45,8 +45,8 @@ const App: React.FC = () => {
                 {/*<LoginButton></LoginButton>*/}
 
                 <Routes>
-                    <Route path={"/report"} element={<ReportView baseURLBack={baseURLBack}/>}/>
-                    <Route path={"/view"} element={<SupervisorView baseURLBack={baseURLBack}/>}></Route>
+                    <Route path={"/report"} element={<ReportView baseURLBack={baseURLBack} isAuthenticated={isAuthenticated}/>}/>
+                    <Route path={"/view"} element={<SupervisorView baseURLBack={baseURLBack} isAuthenticated={isAuthenticated}/>}></Route>
                     <Route path={'/'} element={<LandingPage/>}/>
                 </Routes>
 

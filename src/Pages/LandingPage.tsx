@@ -89,7 +89,7 @@ export default function LandingPage(props: any) {
                 LogOut
               </Button>
           }
-          <Profile></Profile>
+
         </Card>
       </Grid.Col>
       <Grid.Col span={4} offset={2}>
