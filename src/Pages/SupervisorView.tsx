@@ -1,111 +1,137 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, AlertTitle, Box, Grid, Modal, CssBaseline, ThemeProvider, createTheme} from "@mui/material";
-import axios from "axios";
-import ListReport from "../Components/ListReport";
-import SupViewReport from "../Components/SupViewReport";
-import LandingPage from "./LandingPage";
-import {useAuth0, withAuthenticationRequired} from "@auth0/auth0-react";
-import Profile from "../Components/Profile";
+import React, { useEffect, useState } from 'react';
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Grid,
+  Modal,
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+} from '@mui/material';
+import axios from 'axios';
+import ListReport from '../Components/ListReport';
+import SupViewReport from '../Components/SupViewReport';
+import LandingPage from './LandingPage';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import Profile from '../Components/Profile';
 
 function SupervisorView(props: any) {
-
-    const [baseURLBack, setBaseURLBack] = useState(props.baseURLBack)
-    const [baseURLFront, setBaseURLFront] = useState(props.baseURLFront)
-    const [baseURL, setBaseURL] = useState(props.baseURL)
-    const [reportList, setReportList] = useState([]);
-    const [itemView, setItemView] = useState(null)
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const [status, setStatus] = useState(0);
-    const { user } = useAuth0();
-    useEffect(() => {
-        getData().then(r => {console.log(r)});
-    },[])
-
-    const getData = async () => {
-        await axios.get(`${baseURLBack}`)
-            .then((response) => {
-                console.log(response)
-                setStatus(response.status)
-                setReportList(response.data)
-            })
-            .catch((error) => {
-                setStatus(error.status)
-                console.log(error)
-            })
-        // setReportList(response.data)
-    }
-
-    const deleteItem = async (props: number) => {
-        await axios.delete(`${baseURLBack}/${props}`)
-            .then((response)=> {
-                console.log(response)
-                setStatus(response.status)
-                getData();
-            })
-            .catch((error) => {
-                console.log(error)
-                setStatus(error.status)
-            });
-    }
-
-    function notify(){
-        let cat : string = `https://http.cat/${status}.jpg`;
-       if(status >= 300){
-            return (
-                <Alert variant="filled" severity="error">
-                    <AlertTitle>Error</AlertTitle>
-                    <img src={cat} alt={""}  />
-                </Alert>
-            )
-        }
-
-    }
-
-
-    const darkTheme = createTheme({
-        palette: {
-            mode: 'dark',
-        },
+  const [baseURLBack, setBaseURLBack] = useState(props.baseURLBack);
+  const [baseURLFront, setBaseURLFront] = useState(props.baseURLFront);
+  const [baseURL, setBaseURL] = useState(props.baseURL);
+  const [reportList, setReportList] = useState([]);
+  const [itemView, setItemView] = useState(null);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [status, setStatus] = useState(0);
+  const { user } = useAuth0();
+  useEffect(() => {
+    getData().then((r) => {
+      console.log(r);
     });
+  }, []);
 
-    return(
-        <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
-            <Grid container spacing ={2}>
-            <Grid display={"flex"}  justifyContent={"center"}  xs = {12}>
-                <Box className={"report"} sx={{ width: '80%', height: '100vh', marginTop: 10, backgroundColor:"#3A3B3C", border: 1 }} >
-                    <div>
-                        <ListReport deleteItem={deleteItem} reportList={reportList} setItemView = {setItemView} handleOpen={handleOpen}/>
+  const getData = async () => {
+    await axios
+      .get(`${baseURLBack}`)
+      .then((response) => {
+        console.log(response);
+        setStatus(response.status);
+        setReportList(response.data);
+      })
+      .catch((error) => {
+        setStatus(error.status);
+        console.log(error);
+      });
+    // setReportList(response.data)
+  };
 
-                        <Modal
-                        open={open}
-                        onClose={handleClose}
-                        sx={{height: '90%',overflow:'scroll',margin:'auto'}}
-                        >
-                        <div style={{
-                            border: '1px white solid',
-                            height: 'auto',
-                            margin: 'auto',
-                            width: '50%'
-                        }}>
-                            <SupViewReport handleClose={handleClose} itemView = {itemView} setItemView = {setItemView} />
-                        </div>
-                        </Modal>
-                        </div>
-                    </Box>
-                </Grid>
-                <Grid xs = {12}>
-                    {notify()}
-                </Grid>
-            </Grid>
+  const deleteItem = async (props: number) => {
+    await axios
+      .delete(`${baseURLBack}/${props}`)
+      .then((response) => {
+        console.log(response);
+        setStatus(response.status);
+        getData();
+      })
+      .catch((error) => {
+        console.log(error);
+        setStatus(error.status);
+      });
+  };
 
-        </ThemeProvider>
+  function notify() {
+    let cat: string = `https://http.cat/${status}.jpg`;
+    if (status >= 300) {
+      return (
+        <Alert variant="filled" severity="error">
+          <AlertTitle>Error</AlertTitle>
+          <img src={cat} alt={''} />
+        </Alert>
+      );
+    }
+  }
 
-    )
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
 
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Grid container spacing={2}>
+        <Grid display={'flex'} justifyContent={'center'} xs={12}>
+          <Box
+            className={'report'}
+            sx={{
+              width: '80%',
+              height: '100vh',
+              marginTop: 10,
+              backgroundColor: '#3A3B3C',
+              border: 1,
+            }}
+          >
+            <div>
+              <ListReport
+                deleteItem={deleteItem}
+                reportList={reportList}
+                setItemView={setItemView}
+                handleOpen={handleOpen}
+              />
+
+              <Modal
+                open={open}
+                onClose={handleClose}
+                sx={{ height: '90%', overflow: 'scroll', margin: 'auto' }}
+              >
+                <div
+                  style={{
+                    border: '1px white solid',
+                    height: 'auto',
+                    margin: 'auto',
+                    width: '50%',
+                  }}
+                >
+                  <SupViewReport
+                    handleClose={handleClose}
+                    itemView={itemView}
+                    setItemView={setItemView}
+                  />
+                </div>
+              </Modal>
+            </div>
+          </Box>
+        </Grid>
+        <Grid xs={12}>{notify()}</Grid>
+      </Grid>
+    </ThemeProvider>
+  );
 }
+
 
 export default withAuthenticationRequired(SupervisorView, {
     onRedirecting: () => <LandingPage />,
