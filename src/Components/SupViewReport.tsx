@@ -50,32 +50,32 @@ export default function SupViewReport(props: any) {
   function emailFunction() {
     props.handleClose();
 
+    //text feature
     PHONE_TEST.forEach((pn) => {
       console.log(`+1${pn}`);
-   
+
       axios
-      .post(
-        `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
-        new URLSearchParams({
-          MessagingServiceSid: `${messageSid}`,
-          Body: 'MEOW MEOW MEOW TEAM SERIOUS CAT MEOWS!!!!',
-          To: `+1${pn}`,
-        }),
-        {
-          auth: {
-            username: `${accountSid}`,
-            password: `${authToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log('error: ' + e);
-      });
-    })
-   
+        .post(
+          `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+          new URLSearchParams({
+            MessagingServiceSid: `${messageSid}`,
+            Body: 'MEOW MEOW MEOW TEAM SERIOUS CAT MEOWS!!!!',
+            To: `+1${pn}`,
+          }),
+          {
+            auth: {
+              username: `${accountSid}`,
+              password: `${authToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log('error: ' + e);
+        });
+    });
 
     //TEXT FEATURE
     // axios
@@ -386,7 +386,7 @@ export default function SupViewReport(props: any) {
           </Box>
         </Stack>
       </Grid>
-      {/* {handleRedirect()} */}
+      {handleRedirect()}
     </Box>
   );
 }
