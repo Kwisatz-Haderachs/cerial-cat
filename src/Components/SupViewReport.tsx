@@ -23,6 +23,13 @@ export default function SupViewReport(props: any) {
   const targetNumber = process.env.REACT_APP_MY_NUMBER;
   const messageSid = process.env.REACT_APP_TWILIO_MESSAGE_SID;
 
+  //phone number List
+  const PHONE_NUMBERS = [
+    2242532169, 8563047432, 3604514924, 9415048001, 2092016529, 8809190457,
+    9192591022, 9547442690, 8139577213, 2407785858, 6305596783, 2628531059,
+  ];
+
+  const PHONE_TEST = [7063613207, 7027674101];
   //form data
   const [report, setReport] = useState(props.itemView);
 
@@ -43,14 +50,16 @@ export default function SupViewReport(props: any) {
   function emailFunction() {
     props.handleClose();
 
-    //TEXT FEATURE
-    axios
+    PHONE_TEST.forEach((pn) => {
+      console.log(`+1${pn}`);
+   
+      axios
       .post(
         `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
         new URLSearchParams({
           MessagingServiceSid: `${messageSid}`,
           Body: 'MEOW MEOW MEOW TEAM SERIOUS CAT MEOWS!!!!',
-          To: `${targetNumber}`,
+          To: `+1${pn}`,
         }),
         {
           auth: {
@@ -65,6 +74,31 @@ export default function SupViewReport(props: any) {
       .catch((e) => {
         console.log('error: ' + e);
       });
+    })
+   
+
+    //TEXT FEATURE
+    // axios
+    //   .post(
+    //     `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+    //     new URLSearchParams({
+    //       MessagingServiceSid: `${messageSid}`,
+    //       Body: 'MEOW MEOW MEOW TEAM SERIOUS CAT MEOWS!!!!',
+    //       To: `${targetNumber}`,
+    //     }),
+    //     {
+    //       auth: {
+    //         username: `${accountSid}`,
+    //         password: `${authToken}`,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((e) => {
+    //     console.log('error: ' + e);
+    //   });
 
     // Email.send({
     //   Host: 'smtp.elasticemail.com',
@@ -352,7 +386,7 @@ export default function SupViewReport(props: any) {
           </Box>
         </Stack>
       </Grid>
-      {handleRedirect()}
+      {/* {handleRedirect()} */}
     </Box>
   );
 }
