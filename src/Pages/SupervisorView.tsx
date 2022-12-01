@@ -120,6 +120,7 @@ function SupervisorView(props: any) {
                     handleClose={handleClose}
                     itemView={itemView}
                     setItemView={setItemView}
+                    isAuthenticated={props.isAuthenticated}
                   />
                 </div>
               </Modal>
